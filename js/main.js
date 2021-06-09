@@ -1,10 +1,14 @@
 
-
-
+var gCanvas
+var gCtx
 
 function init() {
     var imgs = getImgs();
     renderImgs(imgs);
+
+   gCanvas = document.querySelector('canvas');
+   gCtx = gCanvas.getContext('2d');
+
 }
 
 
@@ -13,7 +17,7 @@ function init() {
 function renderImgs(imgs) {
     var strHTML = imgs.map(image => {
         return `
-<img src=${image.url} onclick="onImgClick()"/>
+<img id=${image.id} src=${image.url} onclick="onImgClick(this)"/>
 
 `
     })
@@ -22,4 +26,28 @@ function renderImgs(imgs) {
     // strHTML+=`<img src="${image.url} onclick="onImgClick()"/>`  
     // });
 
+}
+
+
+
+
+function onImgClick(el) {
+    console.log(el.id);
+
+
+gCtx.drawImage(el,0,0,gCanvas.width,gCanvas.height);
+
+
+    // document.querySelector('.meme-editor p').innerHTML = `<img src="${el.src}"/>`   
+    document.querySelector('.main-content').style.display = "none";
+    // document.querySelector('.meme-editor').classList.add('.flex');
+    document.querySelector('.meme-editor').style.display = "flex";
+}
+
+
+function onShareClick() {
+    document.querySelector('.main-content').style.display = "grid";
+
+    document.querySelector('.meme-editor').style.display = "none";
+    document.querySelector('.meme-editor').classList.remove('.flex');
 }

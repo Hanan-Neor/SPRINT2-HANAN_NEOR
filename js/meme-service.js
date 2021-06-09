@@ -1,11 +1,10 @@
-// [{id: 1, url: 'img/popo.jpg', keywords: ['happy']}]
 
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gImgs = [{ id: 1, url: 'img/1.jpg', keywords: ['trump'] },
 { id: 2, url: 'img/2.jpg', keywords: ['trump'] },
-{ id: 3, url: 'img/3.jpg', keywords: ['trump'] },
-{ id: 4, url: 'img/4.jpg', keywords: ['trump'] },
-{ id: 5, url: 'img/5.jpg', keywords: ['trump'] },
+{ id: 3, url: 'img/3.jpg', keywords: ['dogs','animals','cute'] },
+{ id: 4, url: 'img/4.jpg', keywords: ['dog','animals','baby','sleeping'] },
+{ id: 5, url: 'img/5.jpg', keywords: ['cat','animals','sleeping'] },
 { id: 6, url: 'img/6.jpg', keywords: ['trump'] },
 { id: 7, url: 'img/7.jpg', keywords: ['trump'] },
 { id: 8, url: 'img/8.jpg', keywords: ['trump'] },
@@ -53,16 +52,3 @@ function getImgs() {
 
 
 
-function onImgClick() {
-    document.querySelector('.main-content').style.display = "none";
-    // document.querySelector('.meme-editor').classList.add('.flex');
-    document.querySelector('.meme-editor').style.display = "flex";
-}
-
-
-function onShareClick() {
-    document.querySelector('.main-content').style.display = "grid";
-
-    document.querySelector('.meme-editor').style.display = "none";
-    document.querySelector('.meme-editor').classList.remove('.flex');
-}
