@@ -1,13 +1,13 @@
 
-var gCanvas
+var gCanvas = document.querySelector('canvas');
 var gCtx
 
 function init() {
     var imgs = getImgs();
     renderImgs(imgs);
 
-   gCanvas = document.querySelector('canvas');
-   gCtx = gCanvas.getContext('2d');
+    gCanvas = document.querySelector('canvas');
+    gCtx = gCanvas.getContext('2d');
 
 }
 
@@ -33,9 +33,11 @@ function renderImgs(imgs) {
 
 function onImgClick(el) {
     console.log(el.id);
+    console.log(el.width);
 
-
-gCtx.drawImage(el,0,0,gCanvas.width,gCanvas.height);
+    var canHeight = getCanvasHeight(el.width, el.height);
+    gCanvas.setAttribute("height", canHeight);
+    gCtx.drawImage(el, 0, 0, gCanvas.width, gCanvas.height);
 
 
     // document.querySelector('.meme-editor p').innerHTML = `<img src="${el.src}"/>`   

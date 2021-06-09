@@ -10,8 +10,9 @@ body{
 /* grid-template-columns: repeat(auto-fit,176.5px); */
 grid-template-columns: repeat(auto-fill,minmax(176.5px,1fr));
 /* grid-auto-rows: 176.5px ; */
-grid-auto-rows: auto ;
+/* grid-auto-rows: auto ; */
 gap:5px;
+grid-auto-flow: dense;
 }
 
 img{
@@ -49,8 +50,8 @@ li{
 
 canvas{
 background-color: lightseagreen;
-width: 280px;
-height: 280px;
+/* width: 280px;
+height: 280px; */
 }
 
 .editor-grid{
@@ -160,7 +161,7 @@ padding: 2.5rem;
 
 
 
-@media (max-width:590px){
+@media (max-width:450px){
     .scnd-header{
         display: block;
     }
