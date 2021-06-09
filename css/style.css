@@ -1,5 +1,6 @@
 body{
     margin:0;
+    overflow: overlay;
 }
 
 
@@ -41,6 +42,8 @@ li{
 .meme-editor{
     display: none;
     flex-wrap: wrap;
+    gap:3.125rem;
+    padding: 1rem 1.6rem;
     background-color: lightgrey;
 }
 
