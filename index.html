@@ -10,17 +10,18 @@
 </head>
 
 <body>
-    <div class="main-container">
-        <header class="main-header">
-            <div class="frst-header flex justify-content">
-                <div class="logo">memegen</div>
-                <div class="nav">
-                    <ul class="flex clean-list">
-                        <li>Gallery</li>
-                        <li>About</li>
-                    </ul>
-                </div>
+    <div class="main-layout">
+        <header class="main-header flex justify-content">
+            <div class="logo">memegen</div>
+            <div class="nav">
+                <ul class="flex clean-list">
+                    <li>Gallery</li>
+                    <li>About</li>
+                </ul>
             </div>
+        </header>
+
+        <div class="main-content">
             <div class="scnd-header flex justify-content">
                 <div class="search">
                     <input type="text">
@@ -37,28 +38,96 @@
                 </div>
 
             </div>
-        </header>
 
-        <div class="img-container">
-            <div class="picture"><img src="img/1.jpg" /></div>
-            <div class="picture"><img src="img/2.jpg" /></div>
-            <div class="picture"><img src="img/3.jpg" /></div>
-            <div class="picture"><img src="img/4.jpg" /></div>
-            <div class="picture"><img src="img/5.jpg" /></div>
-            <div class="picture"><img src="img/6.jpg" /></div>
-            <div class="picture"><img src="img/7.jpg" /></div>
-            <div class="picture"><img src="img/8.jpg" /></div>
-            <div class="picture"><img src="img/9.jpg" /></div>
-            <div class="picture"><img src="img/10.jpg" /></div>
-            <div class="picture"><img src="img/11.jpg" /></div>
-            <div class="picture"><img src="img/12.jpg" /></div>
-            <div class="picture"><img src="img/13.jpg" /></div>
-            <div class="picture"><img src="img/14.jpg" /></div>
-            <div class="picture"><img src="img/15.jpg" /></div>
-            <div class="picture"><img src="img/16.jpg" /></div>
-            <div class="picture"><img src="img/17.jpg" /></div>
-            <div class="picture"><img src="img/18.jpg" /></div>
+            <div class="img-container">
+                <img src="img/1.jpg" onclick="onImgClick()"/>
+                <img src="img/2.jpg" />
+                <img src="img/3.jpg" />
+                <img src="img/4.jpg" />
+                <img src="img/5.jpg" />
+                <img src="img/6.jpg" />
+                <img src="img/7.jpg" />
+                <img src="img/8.jpg" />
+                <img src="img/9.jpg" />
+                <img src="img/10.jpg" />
+                <img src="img/11.jpg" />
+                <img src="img/12.jpg" />
+                <img src="img/13.jpg" />
+                <img src="img/14.jpg" />
+                <img src="img/15.jpg" />
+                <img src="img/16.jpg" />
+                <img src="img/17.jpg" />
+                <img src="img/18.jpg" />
+            </div>
+            <!-- <div class="img-container">
+                <div class="picture"><img src="img/1.jpg" /></div><img src="img/1.jpg" />
+                <div class="picture"><img src="img/2.jpg" /></div>
+                <div class="picture"><img src="img/3.jpg" /></div>
+                <div class="picture"><img src="img/4.jpg" /></div>
+                <div class="picture"><img src="img/5.jpg" /></div>
+                <div class="picture"><img src="img/6.jpg" /></div>
+                <div class="picture"><img src="img/7.jpg" /></div>
+                <div class="picture"><img src="img/8.jpg" /></div>
+                <div class="picture"><img src="img/9.jpg" /></div>
+                <div class="picture"><img src="img/10.jpg" /></div>
+                <div class="picture"><img src="img/11.jpg" /></div>
+                <div class="picture"><img src="img/12.jpg" /></div>
+                <div class="picture"><img src="img/13.jpg" /></div>
+                <div class="picture"><img src="img/14.jpg" /></div>
+                <div class="picture"><img src="img/15.jpg" /></div>
+                <div class="picture"><img src="img/16.jpg" /></div>
+                <div class="picture"><img src="img/17.jpg" /></div>
+                <div class="picture"><img src="img/18.jpg" /></div>
+            </div> -->
+
         </div>
+
+
+
+        <!-- <div class="meme-editor flex"> -->
+        <div class="meme-editor">
+
+            <canvas></canvas>
+            
+
+            <div class="editor-grid">
+                <input class="text" type="text">
+                <img class="editor-icons updown" src="ICONS/up-and-down-opposite-double-arrows-side-by-side.png"/>
+                <img class="editor-icons add" src="ICONS/add.png">
+                <img class="editor-icons trash" src="ICONS/trash.png"/>
+                <img class="editor-icons inc-font" src="ICONS/increase font - icon.png"/>
+                <img class="editor-icons dec-font" src="ICONS/decrease font - icon.png"/>
+                <img class="editor-icons to-left" src="ICONS/align-to-left.png"/>
+                <img class="editor-icons to-center" src="ICONS/center-text-alignment.png"/>
+                <img class="editor-icons to-right" src="ICONS/align-to-right.png"/>
+                <select>
+                    <option>Impcat</option>
+                </select>
+                <img class="editor-icons stroke" src="ICONS/text stroke.png"/>
+                <img class="editor-icons color" src="ICONS/paint-board-and-brush.png"/>
+                <div class="editor-icons stickers" class="stickers">stickers</div>
+                <button class="share" onclick="onShareClick()">share</button>
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <footer class="footer">
