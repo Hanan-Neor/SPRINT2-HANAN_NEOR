@@ -11,14 +11,14 @@
 
 <body onload="init()">
     <div class="main-layout">
-        <header class="main-header flex justify-content">
-            <div class="logo">memegen</div>
-            <div class="nav">
-                <ul class="flex clean-list">
-                    <li>Gallery</li>
+        <header class="main-header flex justify-content align-center">
+            <div class="logo"><h3>memegen</h3></div>
+            <!-- <div class="nav"> -->
+                <ul class="nav flex clean-list">
+                    <li class="nav-gallery pointer" onclick="onToGallery()">Gallery</li>
                     <li>About</li>
                 </ul>
-            </div>
+            <!-- </div> -->
         </header>
 
         <div class="main-content">
@@ -35,7 +35,7 @@
                         <li>books</li>
                         <li>more...</li>
                     </ul> -->
-                    <span class="">funny</span>     
+                    <span class="">funny</span>
                     <span class="">commics</span>
                     <span class="">dogs</span>
                     <span class="">drinks</span>
@@ -93,27 +93,28 @@
         <!-- <div class="meme-editor flex"> -->
         <div class="meme-editor">
 
-            <canvas width="500"></canvas>
-            
+            <canvas width="400"></canvas>
+
 
             <div class="editor-grid">
-                <input class="text" type="text">
-                <img class="editor-icons updown" src="ICONS/up-and-down-opposite-double-arrows-side-by-side.png"/>
-                <img class="editor-icons add" src="ICONS/add.png">
-                <img class="editor-icons trash" src="ICONS/trash.png"/>
-                <img class="editor-icons inc-font" src="ICONS/increase font - icon.png"/>
-                <img class="editor-icons dec-font" src="ICONS/decrease font - icon.png"/>
-                <img class="editor-icons to-left" src="ICONS/align-to-left.png"/>
-                <img class="editor-icons to-center" src="ICONS/center-text-alignment.png"/>
-                <img class="editor-icons to-right" src="ICONS/align-to-right.png"/>
+                <input class="text" type="text" onkeyup="drawText(this.value)">
+                <img class="editor-icons updown pointer" src="ICONS/up-and-down-opposite-double-arrows-side-by-side.png" />
+                <img class="editor-icons add pointer" src="ICONS/add.png" onclick="addLine()">
+                <img class="editor-icons trash pointer" src="ICONS/trash.png" onclick="cleanText()" />
+                <img class="editor-icons inc-font pointer" src="ICONS/increase font - icon.png" />
+                <img class="editor-icons dec-font pointer" src="ICONS/decrease font - icon.png" />
+                <img class="editor-icons to-left pointer" src="ICONS/align-to-left.png" />
+                <img class="editor-icons to-center pointer" src="ICONS/center-text-alignment.png" />
+                <img class="editor-icons to-right pointer" src="ICONS/align-to-right.png" />
                 <select>
                     <option>Impcat</option>
                 </select>
-                <img class="editor-icons stroke" src="ICONS/text stroke.png"/>
-                <img class="editor-icons color" src="ICONS/paint-board-and-brush.png"/>
+                <img class="editor-icons stroke pointer" src="ICONS/text stroke.png" />
+                <img class="editor-icons color pointer" src="ICONS/paint-board-and-brush.png" />
                 <div class="editor-icons stickers" class="stickers">stickers</div>
                 <button class="share" onclick="onShareClick()">share</button>
-
+                <!-- <button class="download" href="#" onclick="downloadMeme(this)" download="file-name">download</button> -->
+                <a class="download" href="#" onclick="downloadMeme(this)" download="memegen">download</a>
 
 
 

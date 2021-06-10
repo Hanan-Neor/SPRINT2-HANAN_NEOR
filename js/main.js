@@ -1,17 +1,22 @@
 
 var gCanvas = document.querySelector('canvas');
 var gCtx
+var gImg;
 
 function init() {
     var imgs = getImgs();
     renderImgs(imgs);
-
+    // resizeCanvas();
     gCanvas = document.querySelector('canvas');
     gCtx = gCanvas.getContext('2d');
 
 }
 
+// function resizeCanvas() {
+//     gCanvas.width = document.querySelector('.meme-editor').offsetWidth;
+//     gCanvas.height = document.querySelector('.meme-editor').offsetHeight;
 
+// }
 
 
 function renderImgs(imgs) {
@@ -28,28 +33,36 @@ function renderImgs(imgs) {
 
 }
 
+function onToGallery(){
+    document.querySelector('.main-content').style.display = "grid";
+
+    document.querySelector('.meme-editor').style.display = "none";
+    document.querySelector('.meme-editor').classList.remove('.flex');
+
+
+}
+
 
 
 
 function onImgClick(el) {
     console.log(el.id);
     console.log(el.width);
-
-    var canHeight = getCanvasHeight(el.width, el.height);
-    gCanvas.setAttribute("height", canHeight);
-    gCtx.drawImage(el, 0, 0, gCanvas.width, gCanvas.height);
-
-
+    drawImage(el);
     // document.querySelector('.meme-editor p').innerHTML = `<img src="${el.src}"/>`   
     document.querySelector('.main-content').style.display = "none";
     // document.querySelector('.meme-editor').classList.add('.flex');
     document.querySelector('.meme-editor').style.display = "flex";
 }
 
+function drawImage(el) {
+    gImg = el;
+    var canHeight = getCanvasHeight(el.width, el.height);
+    gCanvas.setAttribute("height", canHeight);
+    gCtx.drawImage(el, 0, 0, gCanvas.width, gCanvas.height);
+}
+
 
 function onShareClick() {
-    document.querySelector('.main-content').style.display = "grid";
-
-    document.querySelector('.meme-editor').style.display = "none";
-    document.querySelector('.meme-editor').classList.remove('.flex');
+   
 }

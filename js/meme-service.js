@@ -1,4 +1,4 @@
-
+var gLineNum
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gImgs = [
 { id: 1, url: 'img/aspect-ratios//1.jpg', keywords: ['trump'] },
@@ -58,4 +58,31 @@ function getCanvasHeight(imgWidth,imgHeight){
     var canWidth = gCanvas.width;
       var canHeight = (imgHeight * canWidth)/imgWidth;
 return canHeight;
+}
+
+
+
+function drawText(text, x=40, y=40){
+    gCtx.clearRect(0, 0,  gCanvas.width,gCanvas.height);
+    drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
+    gCtx.font = '40px Arial'
+    gCtx.fillText(text,x,y);
+    gCtx.strokeText(text,x,y);
+}
+
+function cleanText(){
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
+    
+}
+
+function addLine(){
+    drawText()
+}
+
+
+function downloadMeme(elLink){
+const data = gCanvas.toDataURL();
+elLink.href = data;
+// elLink.download = 'memegen';
 }

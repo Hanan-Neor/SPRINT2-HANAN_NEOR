@@ -1,172 +1,218 @@
-body{
-    margin:0;
+body {
+    margin: 0;
     overflow: overlay;
 }
 
 
-.img-container{
-    display:grid;
-   
-/* grid-template-columns: repeat(auto-fit,176.5px); */
-grid-template-columns: repeat(auto-fill,minmax(176.5px,1fr));
-/* grid-auto-rows: 176.5px ; */
-/* grid-auto-rows: auto ; */
-gap:5px;
-grid-auto-flow: dense;
+h1, h2, h3, h4, h5, h6{
+    /* margin: 0 0 .866em; */
+    margin: 0;
 }
 
-img{
-    width:100%;
+.img-container {
+    background-color: #e3e3e3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(176.5px, 176.5px));
+    grid-auto-rows: auto;
+    gap: 5px;
+    grid-auto-flow: dense;
+    align-items: center;
+    padding: 4px;
+    justify-content: center;
 }
 
-.main-layout{
-    margin:0 auto;
+.img-container>img{
+    cursor: pointer;
+}
+
+img {
+    width: 100%;
+}
+
+.main-layout {
+    margin: 0 auto;
     padding: 0 1rem;
-    max-width:730px;
+    max-width: 730px;
 }
-.main-header{
-color: white;
-background-color:#ff7f00 ;
-padding: 10px 25px;
+
+.main-header {
+    color: white;
+    background-color: #ff7f00;
+    padding: 10px 25px;
+    /* align-content: center; */
 }
-.main-content{
+
+
+.main-header .nav li:not(:last-child){
+border-right: 1px solid #8a8a8a;
+}
+
+.main-header .nav li{
+    padding: 0 0.312rem;
+}
+
+.main-content {
     /* display: none; */
 }
 
-.main-content .scnd-header{
-padding: 10px 25px;
-}
-li{
-    margin-left:1em;
+.main-content .scnd-header {
+    padding: 10px 25px;
 }
 
-.meme-editor{
+.scnd-header span {
+    margin-left: 1em;
+    cursor: pointer;
+}
+.scnd-header span:hover {
+    text-decoration-line:underline;
+}
+
+
+.meme-editor {
     display: none;
+    align-items: flex-start;
     flex-wrap: wrap;
-    gap:3.125rem;
+    gap: 3.125rem;
     padding: 1rem 1.6rem;
-    background-color: lightgrey;
+    background-color: #e3e3e3;
 }
 
-canvas{
-background-color: lightseagreen;
-/* width: 280px;
+canvas {
+    background-color: lightseagreen;
+    /* width: 280px;
 height: 280px; */
 }
 
-.editor-grid{
+.editor-grid {
     display: grid;
-    grid-template-columns: repeat(5,auto) ;
-    grid-template-rows: repeat(6,auto);
+    grid-template-columns: repeat(5, auto);
+    grid-template-rows: repeat(6, auto);
     row-gap: 5px;
     column-gap: 10px;
 }
 
-.editor-grid .text{
+.editor-grid .text {
     grid-column: 1/ span 5;
 }
 
-.editor-icons.updown{
+.editor-icons.updown {
     grid-area: 2/2/3/3;
-} 
-.editor-icons.add{
+}
+
+.editor-icons.add {
     grid-area: 2/3/3/4;
 }
-.editor-icons.trash{
+
+.editor-icons.trash {
     grid-area: 2/4/3/5;
 }
-.editor-icons.inc-font{
+
+.editor-icons.inc-font {
     grid-area: 3/1/4/2;
 }
-.editor-icons.dec-font{
+
+.editor-icons.dec-font {
     grid-area: 3/2/4/3;
 }
-.editor-icons.to-left{
+
+.editor-icons.to-left {
     grid-area: 3/3/4/4;
 }
-.editor-icons.to-center{
+
+.editor-icons.to-center {
     grid-area: 3/4/4/5;
 }
-.editor-icons.to-right{
+
+.editor-icons.to-right {
     grid-area: 3/5/4/6;
 }
 
-.editor-grid select{
+.editor-grid select {
     grid-column: 1 / span 3;
     grid-row: 4/5;
 }
 
-.editor-icons.stroke{
+.editor-icons.stroke {
     grid-area: 4/4/5/5;
 }
-.editor-icons.color{
+
+.editor-icons.color {
     grid-area: 4/5/5/6;
 }
 
-.editor-icons.stickers{
+.editor-icons.stickers {
     grid-area: 5/1/6/6;
 }
 
-.editor-grid .share{
+.editor-grid .share {
     grid-area: 6/4/7/6;
 }
 
+.editor-grid .download{
+    grid-area:6/1/7/4;
+    margin: 0;
+}
 
-
-img.editor-icons{
+img.editor-icons {
     padding: 5.3px;
     background-color: white;
     width: 1.25rem;
-    height:1.25rem;
+    height: 1.25rem;
 }
 
-
-
-
-
-
-
-
-
-
-.footer{
+.footer {
     color: white;
     text-align: center;
-background-color:#ff7f00 ;
-padding: 2.5rem;
+    background-color: #ff7f00;
+    padding: 2.5rem;
 }
 
+/*============================== HELPERS =========================================*/
+.pointer{
+    cursor: pointer;
+}
 
-
-
-/* HELPERS */
-
-.flex{
+.flex {
     display: flex;
 }
 
-.flex.justify-content{
+.flex.justify-content {
     justify-content: space-between;
 }
 
-.flex.align-center{
+.flex.align-center {
     align-items: center;
 }
 
-.clean-list{
+.clean-list {
     list-style-type: none;
-    margin:0;
+    margin: 0;
     padding: 0;
 }
 
 
 
-@media (max-width:450px){
-    .scnd-header{
-        display: block;
-    }
+/* ============================================================= */
+
+@media (max-width:730px){
     .main-layout{
-        padding: 0;
+        max-width: 450px;
     }
 
+/* }
+
+@media (max-width:450px) { */
+    .scnd-header {
+        display: block;
+    }
+    .main-layout {
+        padding: 0;
+        /* max-width: 450px; */
+    }
+    canvas{
+        width:100%;
+    }
+    .meme-editor{
+        justify-content: center;
+    }
 }
