@@ -46,8 +46,10 @@ function onToGallery(){
 
 
 function onImgClick(el) {
-    console.log(el.id);
-    console.log(el.width);
+    // console.log(el.id);
+    // console.log(el.width);
+    gMeme.selectedImgId = el.id;
+    // console.log(gMeme);====================================================
     drawImage(el);
     // document.querySelector('.meme-editor p').innerHTML = `<img src="${el.src}"/>`   
     document.querySelector('.main-content').style.display = "none";
@@ -57,6 +59,8 @@ function onImgClick(el) {
 
 function drawImage(el) {
     gImg = el;
+    // gMeme.id = el.id;
+
     var canHeight = getCanvasHeight(el.width, el.height);
     gCanvas.setAttribute("height", canHeight);
     gCtx.drawImage(el, 0, 0, gCanvas.width, gCanvas.height);
@@ -65,4 +69,18 @@ function drawImage(el) {
 
 function onShareClick() {
    
+}
+
+
+
+function drawImageById(obMeme){
+   meme = getElMemeById(obMeme);
+    var canHeight = getCanvasHeight(el.width, el.height);
+    gCanvas.setAttribute("height", canHeight);
+    gCtx.drawImage(meme, 0, 0, gCanvas.width, gCanvas.height);
+}
+
+
+function getElMemeById(obMeme){
+    elMeme = `<img id=${obMeme.id} src=${image.url}"/>`
 }

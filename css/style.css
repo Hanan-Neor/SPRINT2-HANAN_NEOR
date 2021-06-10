@@ -1,3 +1,6 @@
+/* *{
+    box-sizing: border-box;
+} */
 body {
     margin: 0;
     overflow: overlay;
@@ -12,10 +15,11 @@ h1, h2, h3, h4, h5, h6{
 .img-container {
     background-color: #e3e3e3;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(176.5px, 176.5px));
+    grid-template-columns: repeat(auto-fill, minmax(176.5px, 1fr));
+    /* grid-template-columns: repeat(auto-fill, minmax(176.5px, 176.5px)); */
     grid-auto-rows: auto;
     gap: 5px;
-    grid-auto-flow: dense;
+    /* grid-auto-flow: dense; */
     align-items: center;
     padding: 4px;
     justify-content: center;
@@ -72,9 +76,11 @@ border-right: 1px solid #8a8a8a;
     display: none;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 3.125rem;
-    padding: 1rem 1.6rem;
+    /* gap: 3.125rem; */
+    /* gap: 3vw; */
+    padding: 1rem 0;
     background-color: #e3e3e3;
+    justify-content: space-evenly;
 }
 
 canvas {
@@ -194,7 +200,7 @@ img.editor-icons {
 
 /* ============================================================= */
 
-@media (max-width:730px){
+@media (max-width:680px){
     .main-layout{
         max-width: 450px;
     }
@@ -211,6 +217,7 @@ img.editor-icons {
     }
     canvas{
         width:100%;
+        margin-bottom: 1rem;
     }
     .meme-editor{
         justify-content: center;
