@@ -21,13 +21,15 @@ var gImgs = [
     { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['trump'] },
 ];
 
+const fonts = ['Impact','Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
+
 
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [
         {
-            txt: 'I never eat Falafel',
+            txt: 'very funny',
             size: 40,
             align: 'center',
             fontColor: 'white',
@@ -39,6 +41,9 @@ var gMeme = {
         }
     ]
 }
+var gFont = 'Impact';
+
+var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
 
 
 function getImgs() {
@@ -63,6 +68,7 @@ function cleanText() {
 }
 
 function backToDefault() {
+    gFont = 'Impact';
     gCtx.textBaseline = 'top';
     gMeme.selectedLineIdx = 0;
     gMeme.lines.forEach(obj => {
@@ -105,12 +111,12 @@ function drawTextNew(text) {
 
     gMeme.lines.forEach(line => {
         var x = line.x;
-        var y= line.y;
+        var y = line.y;
 
         // setTextPos(line);
         gCtx.textBaseline = 'middle';
 
-        gCtx.font = `${line.size}px Impact,tahoma`;
+        gCtx.font = `${line.size}px ${gFont},Impact,Segoe UI Semibold`;
         gCtx.lineWidth = 2;
         gCtx.strokeStyle = line.strokeColor;
         gCtx.fillStyle = line.fontColor;
@@ -163,7 +169,7 @@ function getY() {
         case 0:
             return 30;
         case 1:
-            return gCanvas.height -30;
+            return gCanvas.height - 30;
         default:
             return gCanvas.height / 2;
     }
@@ -182,16 +188,43 @@ function decTextSize() {
 
 function textToLeft() {
     gMeme.lines[gMeme.selectedLineIdx].align = 'left';
-    gMeme.lines[gMeme.selectedLineIdx].x=getX();
+    gMeme.lines[gMeme.selectedLineIdx].x = getX();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 function textToCenter() {
     gMeme.lines[gMeme.selectedLineIdx].align = 'center';
-    gMeme.lines[gMeme.selectedLineIdx].x=getX();
+    gMeme.lines[gMeme.selectedLineIdx].x = getX();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 function textToRight() {
     gMeme.lines[gMeme.selectedLineIdx].align = 'right';
-    gMeme.lines[gMeme.selectedLineIdx].x=getX();
+    gMeme.lines[gMeme.selectedLineIdx].x = getX();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+
+function setStrokeColor(color) {
+    console.log(color);
+    gMeme.lines[gMeme.selectedLineIdx].strokeColor = color;
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+
+function setFontColor(color) {
+    gMeme.lines[gMeme.selectedLineIdx].fontColor = color;
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+
+function chooseRow() {
+    console.log(gMeme.selectedLineIdx);
+    if (gMeme.selectedLineIdx === 0) {
+        gMeme.selectedLineIdx = gMeme.lines.length - 1;
+    } else {
+        gMeme.selectedLineIdx--;
+    }
+    console.log(gMeme.selectedLineIdx);
+}
+
+function changeFont(font) {
+    gFont = font;
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+
 }

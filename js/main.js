@@ -9,6 +9,19 @@ function init() {
     renderImgs(imgs);
     gCanvas = document.querySelector('canvas');
     gCtx = gCanvas.getContext('2d');
+
+    document.querySelector('.editor-grid .font-input').addEventListener('mouseover' , function(){
+        document.querySelector('.editor-icons.color').style.background="lightslategrey";
+    })
+    document.querySelector('.editor-grid .font-input').addEventListener('mouseout' , function(){
+        document.querySelector('.editor-icons.color').style.background="white";
+    })
+    document.querySelector('.editor-grid .stroke-input').addEventListener('mouseover' , function(){
+        document.querySelector('.editor-icons.stroke').style.background="lightslategrey";
+    })
+    document.querySelector('.editor-grid .stroke-input').addEventListener('mouseout' , function(){
+        document.querySelector('.editor-icons.stroke').style.background="white";
+    })
 }
 
 
@@ -34,6 +47,19 @@ function onImgClick(el) {
     drawImage(el);
     document.querySelector('.main-content').style.display = "none";
     document.querySelector('.meme-editor').style.display = "flex";
+    // drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    onCleanText()
+    renderFontsOptions();
+}
+
+function renderFontsOptions(){
+    var strHTML = fonts.map(font => {
+        return `
+        <option >${font}</option>
+        `
+    })
+    document.querySelector('.editor-grid select').innerHTML = strHTML.join('');
+
 }
 
 function drawImage(el) {
@@ -64,8 +90,9 @@ function getElMemeById(obMeme) {
 
 
 function onAddLine() {
-    document.querySelector('.editor-grid .text').value = '';
     addLine();
+    document.querySelector('.editor-grid .text').value = '';
+    document.querySelector('.editor-grid .text').style.textAlign = "center";
 }
 
 
@@ -91,12 +118,32 @@ function onTextToRight() {
 }
 
 function onCleanText() {
-    document.querySelector('.editor-grid .text').value = '';
     cleanText();
+    document.querySelector('.editor-grid .text').style.textAlign = "center";
+    document.querySelector('.editor-grid .text').value = '';
 }
 
+
+function onStrokeColor(color) {
+    console.log(color);
+    setStrokeColor(color);
+}
+function onFontColor(color) {
+    console.log(color);
+    setFontColor(color);
+}
 
 function renderCanvas(text, x, y) {
     gCtx.fillText(text, x, y, gCanvas.width - 10);
     gCtx.strokeText(text, x, y, gCanvas.width - 10);
+}
+
+function onChooseRow(){
+    chooseRow();
+    document.querySelector('.editor-grid .text').value = gMeme.lines[gMeme.selectedLineIdx].txt;
+
+}
+
+function onChangeFont(font){
+    changeFont(font);
 }
