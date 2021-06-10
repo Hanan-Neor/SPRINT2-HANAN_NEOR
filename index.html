@@ -24,17 +24,9 @@
         <div class="main-content">
             <div class="scnd-header flex justify-content">
                 <div class="search">
-                    <input type="text">
+                    <input type="text" autofocus>
                 </div>
                 <div class="hashtags">
-                    <!-- <ul class="clean-list flex">
-                        <li>funny</li>
-                        <li>comics</li>
-                        <li>dogs</li>
-                        <li>drinks</li>
-                        <li>books</li>
-                        <li>more...</li>
-                    </ul> -->
                     <span class="">funny</span>
                     <span class="">commics</span>
                     <span class="">dogs</span>
@@ -46,46 +38,9 @@
             </div>
 
             <div class="img-container">
-                <!-- <img src="img/1.jpg" onclick="onImgClick()"/>
-                <img src="img/2.jpg"  onclick="onImgClick()"/>
-                <img src="img/3.jpg"  onclick="onImgClick()"/>
-                <img src="img/4.jpg"  onclick="onImgClick()"/>
-                <img src="img/5.jpg"  onclick="onImgClick()"/>
-                <img src="img/6.jpg"  onclick="onImgClick()"/>
-                <img src="img/7.jpg"  onclick="onImgClick()"/>
-                <img src="img/8.jpg"  onclick="onImgClick()"/>
-                <img src="img/9.jpg"  onclick="onImgClick()"/>
-                <img src="img/10.jpg"  onclick="onImgClick()"/>
-                <img src="img/11.jpg"  onclick="onImgClick()"/>
-                <img src="img/12.jpg"  onclick="onImgClick()"/>
-                <img src="img/13.jpg"  onclick="onImgClick()"/>
-                <img src="img/14.jpg"  onclick="onImgClick()"/>
-                <img src="img/15.jpg"  onclick="onImgClick()"/>
-                <img src="img/16.jpg"  onclick="onImgClick()"/>
-                <img src="img/17.jpg"  onclick="onImgClick()"/>
-                <img src="img/18.jpg"  onclick="onImgClick()"/> -->
+               
             </div>
-            <!-- <div class="img-container">
-                <div class="picture"><img src="img/1.jpg" /></div><img src="img/1.jpg" />
-                <div class="picture"><img src="img/2.jpg" /></div>
-                <div class="picture"><img src="img/3.jpg" /></div>
-                <div class="picture"><img src="img/4.jpg" /></div>
-                <div class="picture"><img src="img/5.jpg" /></div>
-                <div class="picture"><img src="img/6.jpg" /></div>
-                <div class="picture"><img src="img/7.jpg" /></div>
-                <div class="picture"><img src="img/8.jpg" /></div>
-                <div class="picture"><img src="img/9.jpg" /></div>
-                <div class="picture"><img src="img/10.jpg" /></div>
-                <div class="picture"><img src="img/11.jpg" /></div>
-                <div class="picture"><img src="img/12.jpg" /></div>
-                <div class="picture"><img src="img/13.jpg" /></div>
-                <div class="picture"><img src="img/14.jpg" /></div>
-                <div class="picture"><img src="img/15.jpg" /></div>
-                <div class="picture"><img src="img/16.jpg" /></div>
-                <div class="picture"><img src="img/17.jpg" /></div>
-                <div class="picture"><img src="img/18.jpg" /></div>
-            </div> -->
-
+           
         </div>
 
 
@@ -97,16 +52,15 @@
 
 
             <div class="editor-grid">
-                <!-- <input class="text" type="text" onkeyup="drawText(this.value) gMemeText(thix.vslue)"> -->
-                <input class="text" type="text" onkeyup="gMemeText(this.value)">
+                <input class="text" type="text" onsubmit="alert('submit')" oninput="drawTextNew(this.value)" autofocus placeholder="very funny" style="text-align: center;">
                 <img class="editor-icons updown pointer" src="ICONS/up-and-down-opposite-double-arrows-side-by-side.png" />
-                <img class="editor-icons add pointer" src="ICONS/add.png" onclick="addLine()">
-                <img class="editor-icons trash pointer" src="ICONS/trash.png" onclick="cleanText()" />
-                <img class="editor-icons inc-font pointer" src="ICONS/increase font - icon.png" />
-                <img class="editor-icons dec-font pointer" src="ICONS/decrease font - icon.png" />
-                <img class="editor-icons to-left pointer" src="ICONS/align-to-left.png" />
-                <img class="editor-icons to-center pointer" src="ICONS/center-text-alignment.png" />
-                <img class="editor-icons to-right pointer" src="ICONS/align-to-right.png" />
+                <img class="editor-icons add pointer" src="ICONS/add.png" onclick="onAddLine()">
+                <img class="editor-icons trash pointer" src="ICONS/trash.png" onclick="onCleanText()" />
+                <img class="editor-icons inc-font pointer" src="ICONS/increase font - icon.png" onclick="onIncTextSize()"/>
+                <img class="editor-icons dec-font pointer" src="ICONS/decrease font - icon.png" onclick="onDecTextSize()"/>
+                <img class="editor-icons to-left pointer" src="ICONS/align-to-left.png" onclick="onTextToLeft()"/>
+                <img class="editor-icons to-center pointer" src="ICONS/center-text-alignment.png" onclick="onTextToCenter()"/>
+                <img class="editor-icons to-right pointer" src="ICONS/align-to-right.png" onclick="onTextToRight()"/>
                 <select>
                     <option>Impcat</option>
                 </select>
@@ -116,35 +70,15 @@
                 <button class="share" onclick="onShareClick()">share</button>
                 <!-- <button class="download" href="#" onclick="downloadMeme(this)" download="file-name">download</button> -->
                 <a class="download" href="#" onclick="downloadMeme(this)" download="memegen">download</a>
-
-
-
             </div>
-
-
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <footer class="footer">
-            footer
+            <h3>memegen</h3>
+            all rights reserved 2019
         </footer>
 
-
     </div>
-
 
     <script src="js/main.js"></script>
     <script src="js/meme-service.js"></script>

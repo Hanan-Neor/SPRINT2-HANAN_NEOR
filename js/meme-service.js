@@ -22,21 +22,20 @@ var gImgs = [
 ];
 
 
-
-
-
-
-
-
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [
         {
             txt: 'I never eat Falafel',
-            size: 20,
-            align: 'left',
-            color: 'red'
+            size: 40,
+            align: 'center',
+            fontColor: 'white',
+            strokeColor: 'black',
+            // x: gCanvas.width / 2,
+            // y: 10,
+            x: gCanvas.width / 2,
+            y: 30,
         }
     ]
 }
@@ -50,9 +49,6 @@ function getImgs() {
 }
 
 
-
-
-
 function getCanvasHeight(imgWidth, imgHeight) {
     // var canWidth = document.querySelector('canvas');
     var canWidth = gCanvas.width;
@@ -60,37 +56,23 @@ function getCanvasHeight(imgWidth, imgHeight) {
     return canHeight;
 }
 
-
-
-// function drawText(text, x = 40, y = 40) {
-//     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-//     drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
-//     gCtx.font = '40px Arial'
-//     gCtx.fillText(text, x, y);
-//     gCtx.strokeText(text, x, y);
-// }
-
 function cleanText() {
-    // gMeme.lines.forEach(obj=>{
-    //     obj.txt = '';
-    //     console.log(gMeme);
-    // })
-    // gMeme.lines.forEach(obj=>{
     backToDefault();
-    // })
-
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
-
 }
 
 function backToDefault() {
+    gCtx.textBaseline = 'top';
+    gMeme.selectedLineIdx = 0;
     gMeme.lines.forEach(obj => {
         obj.txt = '';
-        obj.size = 20;
-        obj.align = 'left';
-        obj.color = 'red';
-        console.log(gMeme);
+        obj.size = 40;
+        obj.align = 'center';
+        obj.fontColor = 'white';
+        obj.strokeColor = 'black';
+        obj.x = gCanvas.width / 2;
+        obj.y = 30;
     })
 }
 
@@ -99,56 +81,117 @@ function addLine() {
     gMeme.lines.push({})
     var currLine = gMeme.lines[gMeme.selectedLineIdx];
     currLine.txt = '';
-    currLine.size = 20;
-    currLine.align = 'left';
-    currLine.color = 'red';
+    currLine.size = 40;
+    currLine.align = 'center';
+    currLine.fontColor = 'white';
+    currLine.strokeColor = 'black';
+    currLine.x = getX();
+    currLine.y = getY();
+    console.log(currLine);
 }
 
 
 function downloadMeme(elLink) {
     const data = gCanvas.toDataURL();
     elLink.href = data;
-    // elLink.download = 'memegen';
 }
 
 
-function gMemeText(text) {
-    // console.log(text);
-    var textToWrite = gMeme.lines[gMeme.selectedLineIdx].txt = text;
-    console.log(gMeme);
-    drawTextNew(textToWrite)
+function drawTextNew(text) {
+
+    gMeme.lines[gMeme.selectedLineIdx].txt = text;
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    drawImage(gImg);
+
+    gMeme.lines.forEach(line => {
+        var x = line.x;
+        var y= line.y;
+
+        // setTextPos(line);
+        gCtx.textBaseline = 'middle';
+
+        gCtx.font = `${line.size}px Impact,tahoma`;
+        gCtx.lineWidth = 2;
+        gCtx.strokeStyle = line.strokeColor;
+        gCtx.fillStyle = line.fontColor;
+        gCtx.textAlign = line.align;
+        renderCanvas(line.txt, x, y);
+    })
 }
 
+function setTextPos(line) {
+    switch (line.align) {
+        case 'center':
+            gCtx.textAlign = 'center';
+            break;
+        case 'left':
+            gCtx.textAlign = 'left';
+            break;
+        case 'right':
+            gCtx.textAlign = 'right';
+            break;
+    }
 
+    switch (gMeme.selectedLineIdx) {
+        case 0: gCtx.textBaseline = 'top'
+            break;
+        case 1: gCtx.textBaseline = 'bottom'
+            break;
+        default: gCtx.textBaseline = 'middle'
+            break;
+    }
+}
 
-function drawTextNew(text, x = 40) {
+function getX() {
+    switch (gMeme.lines[gMeme.selectedLineIdx].align) {
+        case 'center':
+            // gCtx.textAlign = 'center';
+            return gCanvas.width / 2;
+
+        case 'left':
+            // gCtx.textAlign = 'left';
+            return 5;
+
+        case 'right':
+            // gCtx.textAlign = 'right';
+            return gCanvas.width - 5;
+    }
+}
+
+function getY() {
     switch (gMeme.selectedLineIdx) {
         case 0:
-            y = 50;
-            break;
+            return 30;
         case 1:
-            y = gCanvas.height - 50;
-            break;
+            return gCanvas.height -30;
         default:
-            y = gCanvas.height / 2;
+            return gCanvas.height / 2;
     }
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-    drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
-    gCtx.font = `${gMeme.lines[gMeme.selectedLineIdx].size}px Impact,tahoma`
-    gCtx.fillText(text, x, y);
-    gCtx.strokeText(text, x, y);
 }
 
 
-// var gMeme = {
-//     selectedImgId: 5,
-//     selectedLineIdx: 0,
-//     lines: [
-//         {
-//             txt: 'I never eat Falafel',
-//             size: 20,
-//             align: 'left',
-//             color: 'red'
-//         }
-//     ]
-// }
+function incTextSize() {
+    gMeme.lines[gMeme.selectedLineIdx].size += 5;
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+
+function decTextSize() {
+    gMeme.lines[gMeme.selectedLineIdx].size -= 5;
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+
+function textToLeft() {
+    gMeme.lines[gMeme.selectedLineIdx].align = 'left';
+    gMeme.lines[gMeme.selectedLineIdx].x=getX();
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+function textToCenter() {
+    gMeme.lines[gMeme.selectedLineIdx].align = 'center';
+    gMeme.lines[gMeme.selectedLineIdx].x=getX();
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+function textToRight() {
+    gMeme.lines[gMeme.selectedLineIdx].align = 'right';
+    gMeme.lines[gMeme.selectedLineIdx].x=getX();
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
