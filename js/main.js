@@ -7,6 +7,7 @@ var gIsBorder = true;
 function init() {
     // console.dir(gCanvas)
     var imgs = getImgs();
+    console.log(imgs);
     renderImgs(imgs);
     renderKeywords();
     gCanvas = document.querySelector('canvas');
@@ -58,7 +59,7 @@ function renderKeywords() {
     var strHTML = ``
     for (let word in keywords) {
 
-        strHTML += `<span>${word}</span>`
+        strHTML += `<span onclick="onSetFilter('${word}')">${word}</span>`
         // strHTML+=`<a>${word}</a> `
         // console.log(`${word} : ${keywords[word]}`)
         //      }
@@ -75,7 +76,6 @@ function renderKeywords() {
 }
 
 function onImgClick(el) {
-
     gMeme.selectedImgId = el.id;
     drawImage(el);
     document.querySelector('.main-content').style.display = "none";
@@ -240,5 +240,10 @@ function onLineDown() {
 function onLineUp() {
     gIsBorder = true;
     lineUp();
+}
+
+function onSetFilter(txt){
+    setFilter(txt);
+    init();
 }
 

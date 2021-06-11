@@ -53,14 +53,16 @@ var gMeme = {
 var gFont = 'Impact';
 
 var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
-
+var gFilterBy = '';
 
 function getImgs() {
-
-    var imgs = gImgs;
-
+    var regex = new RegExp(gFilterBy, 'i')
+    var imgs = gImgs.filter(function(img){
+        return regex.test(JSON.stringify(img.keywords))
+    })
     return imgs;
 }
+
 function getKeywords() {
     return gKeywords;
 }
@@ -301,4 +303,8 @@ function lineUp(){
     gMeme.lines[gMeme.selectedLineIdx].y-=5;
     gMeme.lines[gMeme.selectedLineIdx].borderY-=5
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+
+function setFilter(filterBy) {
+    gFilterBy = filterBy;
 }
