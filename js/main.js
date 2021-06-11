@@ -7,7 +7,6 @@ var gIsBorder = true;
 function init() {
     // console.dir(gCanvas)
     var imgs = getImgs();
-    console.log(imgs);
     renderImgs(imgs);
     renderKeywords();
     gCanvas = document.querySelector('canvas');
@@ -48,6 +47,7 @@ function renderImgs(imgs) {
 }
 
 function onToGallery() {
+    onSetFilter('');
     document.querySelector('.main-content').style.display = "grid";
     document.querySelector('.meme-editor').style.display = "none";
     document.querySelector('.meme-editor').classList.remove('.flex');

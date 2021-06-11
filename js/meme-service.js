@@ -1,3 +1,5 @@
+// ================================= GLOBALS ============================================
+
 var gLineNum
 var gKeywords = {
     'happy': 12, 'baby': 1, 'yes': 0, 'success': 0, 'dancing': 0, 'trump': 0, 'dogs': 0,
@@ -28,7 +30,6 @@ var gImgs = [
 
 const fonts = ['Impact', 'Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
 
-
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
@@ -49,11 +50,12 @@ var gMeme = {
     ]
 }
 
-
 var gFont = 'Impact';
-
 var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
 var gFilterBy = '';
+
+// =======================================================================================================
+
 
 function getImgs() {
     var regex = new RegExp(gFilterBy, 'i')

@@ -58,6 +58,10 @@ border-right: 1px solid #8a8a8a;
 .main-header .nav li{
     padding: 0 0.312rem;
 }
+.main-header .nav li:hover{
+    text-decoration-line:underline;
+
+}
 
 
 .main-content .scnd-header {
@@ -76,6 +80,11 @@ border-right: 1px solid #8a8a8a;
 .scnd-header span:hover {
     text-decoration-line:underline;
 }
+
+/* .scnd-header .search .text{
+    background: white url(/ICONS/search-icon.png) right no-repeat;
+    padding-right: 17px;
+} */
 
 /* ============================== EDITOR SCREEN =============================== */
 
@@ -125,7 +134,7 @@ background-color: #ff7f00;
 
 
 .editor-icons.updown {
-    grid-area: 2/2/3/3;
+    grid-area: 2/5/3/6;
 }
 
 .editor-icons.add {
