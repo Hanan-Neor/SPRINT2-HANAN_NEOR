@@ -21,7 +21,7 @@ var gImgs = [
     { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['trump'] },
 ];
 
-const fonts = ['Impact','Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
+const fonts = ['Impact', 'Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
 
 
 var gMeme = {
@@ -38,9 +38,13 @@ var gMeme = {
             // y: 10,
             x: gCanvas.width / 2,
             y: 30,
+            borderX:10,
+            borderY:10,
         }
     ]
 }
+
+
 var gFont = 'Impact';
 
 var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
@@ -65,6 +69,8 @@ function cleanText() {
     backToDefault();
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
+    gY = getY() - 20;
+
 }
 
 function backToDefault() {
@@ -93,7 +99,9 @@ function addLine() {
     currLine.strokeColor = 'black';
     currLine.x = getX();
     currLine.y = getY();
-    console.log(currLine);
+    gMeme.lines[gMeme.selectedLineIdx].borderY = getY() - 20;
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);   //    to erease old border
+
 }
 
 
@@ -108,7 +116,7 @@ function drawTextNew(text) {
     gMeme.lines[gMeme.selectedLineIdx].txt = text;
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImage(gImg);
-
+    drawBorder();
     gMeme.lines.forEach(line => {
         var x = line.x;
         var y = line.y;
@@ -175,14 +183,48 @@ function getY() {
     }
 }
 
+function getYshift() {
+    switch (gMeme.selectedLineIdx) {
+        case 0:
+            return 2.5;
+        case 1:
+            return -2.5;
+        default:
+            return 0;
+    }
+}
+// function drawBorder(x=10, y=10){
+function drawBorder() {
+    x = 3;
+    y = gMeme.lines[gMeme.selectedLineIdx].borderY;
+    // var y= gMeme.lines[gMeme.selectedLineIdx].size+5;
+    gCtx.beginPath();
+    gCtx.lineWidth =2;
+
+    // gCtx.rect(x, y, gCanvas.width - 20, gMeme.lines[gMeme.selectedLineIdx].size)
+    gCtx.rect(x, y, gCanvas.width - 7, gMeme.lines[gMeme.selectedLineIdx].size)
+    gCtx.strokeStyle = 'white';
+    gCtx.stroke();
+}
 
 function incTextSize() {
+
     gMeme.lines[gMeme.selectedLineIdx].size += 5;
+    if (gMeme.selectedLineIdx === 1) {
+        gMeme.lines[gMeme.selectedLineIdx].borderY -= 5;
+    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY -= 2.5;
+    gMeme.lines[gMeme.selectedLineIdx].y += getYshift();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    console.log(gY);
 }
 
 function decTextSize() {
     gMeme.lines[gMeme.selectedLineIdx].size -= 5;
+    if (gMeme.selectedLineIdx === 1) {
+        gMeme.lines[gMeme.selectedLineIdx].borderY += 5;
+    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY += 2.5;
+
+    gMeme.lines[gMeme.selectedLineIdx].y -= getYshift();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 
@@ -214,13 +256,13 @@ function setFontColor(color) {
 }
 
 function chooseRow() {
-    console.log(gMeme.selectedLineIdx);
     if (gMeme.selectedLineIdx === 0) {
         gMeme.selectedLineIdx = gMeme.lines.length - 1;
     } else {
         gMeme.selectedLineIdx--;
     }
-    console.log(gMeme.selectedLineIdx);
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt); /// to draw the border 
+
 }
 
 function changeFont(font) {

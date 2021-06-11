@@ -11,16 +11,22 @@ function init() {
     gCtx = gCanvas.getContext('2d');
 
     document.querySelector('.editor-grid .font-input').addEventListener('mouseover' , function(){
-        document.querySelector('.editor-icons.color').style.background="lightslategrey";
+        document.querySelector('.editor-icons.color').style.background="rgb(255, 127, 0)";
     })
     document.querySelector('.editor-grid .font-input').addEventListener('mouseout' , function(){
         document.querySelector('.editor-icons.color').style.background="white";
     })
     document.querySelector('.editor-grid .stroke-input').addEventListener('mouseover' , function(){
-        document.querySelector('.editor-icons.stroke').style.background="lightslategrey";
+        document.querySelector('.editor-icons.stroke').style.background= "rgb(255, 127, 0)";
     })
     document.querySelector('.editor-grid .stroke-input').addEventListener('mouseout' , function(){
         document.querySelector('.editor-icons.stroke').style.background="white";
+    })
+
+    document.querySelector('.editor-grid .download').addEventListener('mouseover' , function(){
+        gMeme.lines[gMeme.selectedLineIdx].borderY =1000;
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+
     })
 }
 
@@ -147,3 +153,20 @@ function onChooseRow(){
 function onChangeFont(font){
     changeFont(font);
 }
+
+function onDrawBorder(){
+    drawBorder();
+}
+
+// // function drawBorder(x=10, y=10){
+// function drawBorder(){
+//     var x =10;
+//     var y= getY()-20;
+//     // var y= gMeme.lines[gMeme.selectedLineIdx].size+5;
+//     gCtx.beginPath()
+//     gCtx.lineWidth = 2
+
+//     gCtx.rect(x,y,gCanvas.width-20,gMeme.lines[gMeme.selectedLineIdx].size)
+//     gCtx.strokeStyle = 'white';
+//     gCtx.stroke();
+// }
