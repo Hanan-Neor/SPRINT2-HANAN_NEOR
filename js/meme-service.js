@@ -1,24 +1,29 @@
 var gLineNum
-var gKeywords = { 'happy': 12, 'funny puk': 1 }
+var gKeywords = {
+    'happy': 12, 'baby': 1, 'yes': 0, 'success': 0, 'dancing': 0, 'trump': 0, 'dogs': 0,
+    'animals': 0, 'cute': 0, 'sleeping': 0, 'cat': 0, 'interesting': 0, 'gotcha': 0, 'you': 0, 'blame': 0, 'scream': 0,
+    'shout': 0, 'explaining': 0, 'but': 0, 'fake': 0, 'barak': 0, 'obama': 0, 'happy': 0, 'lought': 0, 'sport': 0, 'basketball': 0,
+    'bro': 0
+}
 var gImgs = [
-    { id: 1, url: 'img/aspect-ratios//1.jpg', keywords: ['trump'] },
-    { id: 2, url: 'img/aspect-ratios/2.jpg', keywords: ['trump'] },
-    { id: 3, url: 'img/aspect-ratios/3.jpg', keywords: ['dogs', 'animals', 'cute'] },
-    { id: 4, url: 'img/aspect-ratios/4.jpg', keywords: ['dog', 'animals', 'baby', 'sleeping'] },
-    { id: 5, url: 'img/aspect-ratios/5.jpg', keywords: ['cat', 'animals', 'sleeping'] },
-    { id: 6, url: 'img/aspect-ratios/6.jpg', keywords: ['trump'] },
-    { id: 7, url: 'img/aspect-ratios/7.jpg', keywords: ['trump'] },
-    { id: 8, url: 'img/aspect-ratios/8.jpg', keywords: ['trump'] },
-    { id: 9, url: 'img/aspect-ratios/9.jpg', keywords: ['trump'] },
-    { id: 10, url: 'img/aspect-ratios/10.jpg', keywords: ['trump'] },
-    { id: 11, url: 'img/aspect-ratios/11.jpg', keywords: ['trump'] },
-    { id: 12, url: 'img/aspect-ratios/12.jpg', keywords: ['trump'] },
-    { id: 13, url: 'img/aspect-ratios/13.jpg', keywords: ['trump'] },
+    { id: 1, url: 'img/aspect-ratios//1.jpg', keywords: ['baby', 'yes', 'success'] },
+    { id: 2, url: 'img/aspect-ratios/2.jpg', keywords: ['success', 'happy', 'dancing'] },
+    { id: 3, url: 'img/aspect-ratios/3.jpg', keywords: ['trump'] },
+    { id: 4, url: 'img/aspect-ratios/4.jpg', keywords: ['dogs', 'animals', 'cute'] },
+    { id: 5, url: 'img/aspect-ratios/5.jpg', keywords: ['dogs', 'animals', 'baby', 'sleeping'] },
+    { id: 6, url: 'img/aspect-ratios/6.jpg', keywords: ['cat', 'animals', 'sleeping'] },
+    { id: 7, url: 'img/aspect-ratios/7.jpg', keywords: ['happy', 'interesting'] },
+    { id: 8, url: 'img/aspect-ratios/8.jpg', keywords: ['happy', 'baby', 'gotcha'] },
+    { id: 9, url: 'img/aspect-ratios/9.jpg', keywords: ['you', 'blame'] },
+    { id: 10, url: 'img/aspect-ratios/10.jpg', keywords: ['blame', 'scream', 'shout'] },
+    { id: 11, url: 'img/aspect-ratios/11.jpg', keywords: ['explaining'] },
+    { id: 12, url: 'img/aspect-ratios/12.jpg', keywords: ['but', 'fake'] },
+    { id: 13, url: 'img/aspect-ratios/13.jpg', keywords: ['baby', 'happy', 'dancing'] },
     { id: 14, url: 'img/aspect-ratios/14.jpg', keywords: ['trump'] },
-    { id: 15, url: 'img/aspect-ratios/15.jpg', keywords: ['trump'] },
-    { id: 16, url: 'img/aspect-ratios/16.jpg', keywords: ['trump'] },
-    { id: 17, url: 'img/aspect-ratios/17.jpg', keywords: ['trump'] },
-    { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['trump'] },
+    { id: 15, url: 'img/aspect-ratios/15.jpg', keywords: ['baby'] },
+    { id: 16, url: 'img/aspect-ratios/16.jpg', keywords: ['dogs', 'animals'] },
+    { id: 17, url: 'img/aspect-ratios/17.jpg', keywords: ['barak', 'obama', 'happy', 'lought'] },
+    { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['sport', 'basketball', 'bro'] },
 ];
 
 const fonts = ['Impact', 'Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
@@ -38,8 +43,8 @@ var gMeme = {
             // y: 10,
             x: gCanvas.width / 2,
             y: 30,
-            borderX:10,
-            borderY:10,
+            borderX: 10,
+            borderY: 10,
         }
     ]
 }
@@ -55,6 +60,9 @@ function getImgs() {
     var imgs = gImgs;
 
     return imgs;
+}
+function getKeywords() {
+    return gKeywords;
 }
 
 
@@ -116,7 +124,9 @@ function drawTextNew(text) {
     gMeme.lines[gMeme.selectedLineIdx].txt = text;
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImage(gImg);
-    drawBorder();
+    if (gIsBorder) {
+        drawBorder();
+    }
     gMeme.lines.forEach(line => {
         var x = line.x;
         var y = line.y;
@@ -199,7 +209,7 @@ function drawBorder() {
     y = gMeme.lines[gMeme.selectedLineIdx].borderY;
     // var y= gMeme.lines[gMeme.selectedLineIdx].size+5;
     gCtx.beginPath();
-    gCtx.lineWidth =2;
+    gCtx.lineWidth = 2;
 
     // gCtx.rect(x, y, gCanvas.width - 20, gMeme.lines[gMeme.selectedLineIdx].size)
     gCtx.rect(x, y, gCanvas.width - 7, gMeme.lines[gMeme.selectedLineIdx].size)
@@ -268,5 +278,16 @@ function chooseRow() {
 function changeFont(font) {
     gFont = font;
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
 
+function lineDown(){
+    gMeme.lines[gMeme.selectedLineIdx].y+=5;
+    gMeme.lines[gMeme.selectedLineIdx].borderY+=5
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+}
+
+function lineUp(){
+    gMeme.lines[gMeme.selectedLineIdx].y-=5;
+    gMeme.lines[gMeme.selectedLineIdx].borderY-=5
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }

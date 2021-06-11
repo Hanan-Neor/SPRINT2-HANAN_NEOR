@@ -2,32 +2,37 @@
 var gCanvas = document.querySelector('canvas');
 var gCtx
 var gImg;
+var gIsBorder = true;
 
 function init() {
     // console.dir(gCanvas)
     var imgs = getImgs();
     renderImgs(imgs);
+    renderKeywords();
     gCanvas = document.querySelector('canvas');
     gCtx = gCanvas.getContext('2d');
 
-    document.querySelector('.editor-grid .font-input').addEventListener('mouseover' , function(){
-        document.querySelector('.editor-icons.color').style.background="rgb(255, 127, 0)";
+    document.querySelector('.editor-grid .font-input').addEventListener('mouseover', function () {
+        document.querySelector('.editor-icons.color').style.background = "rgb(255, 127, 0)";
     })
-    document.querySelector('.editor-grid .font-input').addEventListener('mouseout' , function(){
-        document.querySelector('.editor-icons.color').style.background="white";
+    document.querySelector('.editor-grid .font-input').addEventListener('mouseout', function () {
+        document.querySelector('.editor-icons.color').style.background = "white";
     })
-    document.querySelector('.editor-grid .stroke-input').addEventListener('mouseover' , function(){
-        document.querySelector('.editor-icons.stroke').style.background= "rgb(255, 127, 0)";
+    document.querySelector('.editor-grid .stroke-input').addEventListener('mouseover', function () {
+        document.querySelector('.editor-icons.stroke').style.background = "rgb(255, 127, 0)";
     })
-    document.querySelector('.editor-grid .stroke-input').addEventListener('mouseout' , function(){
-        document.querySelector('.editor-icons.stroke').style.background="white";
+    document.querySelector('.editor-grid .stroke-input').addEventListener('mouseout', function () {
+        document.querySelector('.editor-icons.stroke').style.background = "white";
     })
 
-    document.querySelector('.editor-grid .download').addEventListener('mouseover' , function(){
-        gMeme.lines[gMeme.selectedLineIdx].borderY =1000;
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
-
-    })
+    // document.querySelector('.editor-grid .download').addEventListener('mouseover', function () {
+    //     gMeme.lines[gMeme.selectedLineIdx].borderY = 1000;
+    //     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    // })
+    document.querySelector('.editor-grid .text').addEventListener('blur', function () {
+        gIsBorder = false;
+        drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    });
 }
 
 
@@ -48,17 +53,41 @@ function onToGallery() {
 }
 
 
+function renderKeywords() {
+    var keywords = getKeywords();
+    var strHTML = ``
+    for (let word in keywords) {
+
+        strHTML += `<span>${word}</span>`
+        // strHTML+=`<a>${word}</a> `
+        // console.log(`${word} : ${keywords[word]}`)
+        //      }
+        //     var strHTML = keywords.map(word => {
+        //         return `
+        // <span id=${image.id} onclick=""/>${word}
+
+        // `
+        //     })
+        //     document.querySelector('.scnd-header .hashtags').innerHTML = strHTML.join('')
+    }
+    // strHTML+=`</span>`
+    document.querySelector('.scnd-header .hashtags').innerHTML = strHTML
+    console.log(strHTML);
+}
+
 function onImgClick(el) {
+
     gMeme.selectedImgId = el.id;
     drawImage(el);
     document.querySelector('.main-content').style.display = "none";
     document.querySelector('.meme-editor').style.display = "flex";
-    // drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
     onCleanText()
     renderFontsOptions();
+    document.querySelector('.editor-grid .text').focus();
 }
 
-function renderFontsOptions(){
+function renderFontsOptions() {
     var strHTML = fonts.map(font => {
         return `
         <option >${font}</option>
@@ -96,45 +125,64 @@ function getElMemeById(obMeme) {
 
 
 function onAddLine() {
+    gIsBorder = true;
     addLine();
+    document.querySelector('.editor-grid .text').focus();
+
     document.querySelector('.editor-grid .text').value = '';
     document.querySelector('.editor-grid .text').style.textAlign = "center";
 }
 
 
 function onIncTextSize() {
+    gIsBorder = true;
+
     incTextSize();
 }
 
 function onDecTextSize() {
+    gIsBorder = true;
+
     decTextSize();
 }
 
 function onTextToLeft() {
+    gIsBorder = true;
+
     document.querySelector('.editor-grid .text').style.textAlign = "left";
     textToLeft();
 }
 function onTextToCenter() {
+    gIsBorder = true;
+
     document.querySelector('.editor-grid .text').style.textAlign = "center";
     textToCenter();
 }
 function onTextToRight() {
+    gIsBorder = true;
+
     document.querySelector('.editor-grid .text').style.textAlign = "right";
     textToRight();
 }
 
 function onCleanText() {
+    gIsBorder = true;
+
     cleanText();
     document.querySelector('.editor-grid .text').style.textAlign = "center";
     document.querySelector('.editor-grid .text').value = '';
+    document.querySelector('.editor-grid .text').focus();
+
 }
 
 
 function onStrokeColor(color) {
+    gIsBorder = true;
     console.log(color);
     setStrokeColor(color);
 }
 function onFontColor(color) {
+    gIsBorder = true;
     console.log(color);
     setFontColor(color);
 }
@@ -144,17 +192,23 @@ function renderCanvas(text, x, y) {
     gCtx.strokeText(text, x, y, gCanvas.width - 10);
 }
 
-function onChooseRow(){
+function onChooseRow() {
+    gIsBorder = true;
+
     chooseRow();
     document.querySelector('.editor-grid .text').value = gMeme.lines[gMeme.selectedLineIdx].txt;
-
+    document.querySelector('.editor-grid .text').style.textAlign = gMeme.lines[gMeme.selectedLineIdx].align;
 }
 
-function onChangeFont(font){
+function onChangeFont(font) {
+    gIsBorder = true;
+
     changeFont(font);
 }
 
-function onDrawBorder(){
+function onDrawBorder() {
+
+    gIsBorder = true;
     drawBorder();
 }
 
@@ -170,3 +224,15 @@ function onDrawBorder(){
 //     gCtx.strokeStyle = 'white';
 //     gCtx.stroke();
 // }
+
+
+function onLineDown() {
+    gIsBorder = true;
+    lineDown()
+}
+
+function onLineUp() {
+    gIsBorder = true;
+    lineUp();
+}
+
