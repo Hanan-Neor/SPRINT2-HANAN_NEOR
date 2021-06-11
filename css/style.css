@@ -28,6 +28,10 @@ h1, h2, h3, h4, h5, h6{
 .img-container>img{
     cursor: pointer;
 }
+.img-container>img:hover{
+    /* border:3px solid black; */
+    box-shadow: 0 0 0 5px   #ff7f00;
+}
 
 img {
     width: 100%;

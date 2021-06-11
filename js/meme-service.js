@@ -77,8 +77,20 @@ function cleanText() {
     backToDefault();
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
-    gY = getY() - 20;
+}
 
+function cleanLine() {
+    if(gMeme.selectedLineIdx!= 0){
+        gMeme.lines.splice(gMeme.selectedLineIdx,1)
+        gMeme.selectedLineIdx--;
+    }else if(gMeme.lines.length != 1){
+        gMeme.lines.splice(gMeme.selectedLineIdx,1)
+        gMeme.selectedLineIdx = gMeme.lines.length - 1;
+    }else{
+        backToDefault()
+    }
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 
 function backToDefault() {
@@ -93,6 +105,7 @@ function backToDefault() {
         obj.strokeColor = 'black';
         obj.x = gCanvas.width / 2;
         obj.y = 30;
+        obj.borderY= 10;
     })
 }
 
@@ -225,7 +238,6 @@ function incTextSize() {
     } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY -= 2.5;
     gMeme.lines[gMeme.selectedLineIdx].y += getYshift();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
-    console.log(gY);
 }
 
 function decTextSize() {
@@ -255,7 +267,6 @@ function textToRight() {
 }
 
 function setStrokeColor(color) {
-    console.log(color);
     gMeme.lines[gMeme.selectedLineIdx].strokeColor = color;
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }

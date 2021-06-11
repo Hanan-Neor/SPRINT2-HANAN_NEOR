@@ -72,7 +72,6 @@ function renderKeywords() {
     }
     // strHTML+=`</span>`
     document.querySelector('.scnd-header .hashtags').innerHTML = strHTML
-    console.log(strHTML);
 }
 
 function onImgClick(el) {
@@ -126,6 +125,10 @@ function getElMemeById(obMeme) {
 
 function onAddLine() {
     gIsBorder = true;
+    if(!document.querySelector('.editor-grid .text').value){
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);   //    to keep the border of the current line
+    return;
+    }
     addLine();
     document.querySelector('.editor-grid .text').focus();
 
@@ -165,25 +168,28 @@ function onTextToRight() {
     textToRight();
 }
 
+// function onCleanText() {
+//     gIsBorder = true;
+//     cleanText();
+//     document.querySelector('.editor-grid .text').style.textAlign = "center";
+//     document.querySelector('.editor-grid .text').value = '';
+//     document.querySelector('.editor-grid .text').focus();
+// }
 function onCleanText() {
     gIsBorder = true;
-
-    cleanText();
-    document.querySelector('.editor-grid .text').style.textAlign = "center";
-    document.querySelector('.editor-grid .text').value = '';
+    cleanLine();
+    document.querySelector('.editor-grid .text').style.textAlign = gMeme.lines[gMeme.selectedLineIdx].align;
+    document.querySelector('.editor-grid .text').value = gMeme.lines[gMeme.selectedLineIdx].txt;
     document.querySelector('.editor-grid .text').focus();
-
 }
 
 
 function onStrokeColor(color) {
     gIsBorder = true;
-    console.log(color);
     setStrokeColor(color);
 }
 function onFontColor(color) {
     gIsBorder = true;
-    console.log(color);
     setFontColor(color);
 }
 
