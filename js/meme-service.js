@@ -78,6 +78,7 @@ function getCanvasHeight(imgWidth, imgHeight) {
 }
 
 function cleanText() {
+    gMeme.lines.splice(1, gMeme.lines.length)
     backToDefault();
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
