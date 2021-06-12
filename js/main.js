@@ -6,7 +6,7 @@ var gIsBorder = true;
 
 function init() {
     // console.dir(gCanvas)
-    var imgs = getImgs();
+        var imgs = getImgs();
     renderImgs(imgs);
     renderKeywords();
     gCanvas = document.querySelector('canvas');
@@ -33,8 +33,8 @@ function quaryselectors() {
     });
 }
 
-function getCurrLine(){
-   return currLine();
+function getCurrLine() {
+    return currLine();
 }
 
 function renderImgs(imgs) {
@@ -51,6 +51,20 @@ function onToGallery() {
     onSetFilter('');
     document.querySelector('.main-content').style.display = "grid";
     document.querySelector('.meme-editor').style.display = "none";
+    document.querySelector('.scnd-header').style.display = "flex";
+
+    document.querySelector('.meme-editor').classList.remove('.flex');
+}
+
+function onToMemes() {
+    var imgs = getSavedMemes();
+if(!getSavedMemes()){
+    document.querySelector('.img-container').innerHTML = 'nothing to show yet'
+}else renderImgs(imgs);
+
+    document.querySelector('.main-content').style.display = "grid";
+    document.querySelector('.meme-editor').style.display = "none";
+    document.querySelector('.scnd-header').style.display = "none";
     document.querySelector('.meme-editor').classList.remove('.flex');
 }
 
@@ -104,8 +118,9 @@ function drawImage(el) {
     gCtx.drawImage(el, 0, 0, gCanvas.width, gCanvas.height);
 }
 
-function onShareClick() {
-
+function onSaveClick() {
+    saveMeme();
+    onToMemes();
 }
 
 function drawImageById(obMeme) {
@@ -123,7 +138,7 @@ function onAddLine() {
     gIsBorder = true;
     if (!document.querySelector('.editor-grid .text').value) {
         drawTextNew(getCurrLine().txt);   //    to keep the border of the current line
-    document.querySelector('.editor-grid .text').focus();
+        document.querySelector('.editor-grid .text').focus();
         return;
     }
     addLine();
@@ -222,4 +237,3 @@ function onSetFilter(txt) {
     setFilter(txt);
     init();
 }
-

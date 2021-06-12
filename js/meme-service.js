@@ -4,7 +4,7 @@ var gLineNum
 var gKeywords = {
     'happy': 12, 'baby': 1, 'yes': 0, 'success': 0, 'dancing': 0, 'trump': 0, 'dogs': 0,
     'animals': 0, 'cute': 0, 'sleeping': 0, 'cat': 0, 'interesting': 0, 'gotcha': 0, 'you': 0, 'blame': 0, 'scream': 0,
-    'shout': 0, 'explaining': 0, 'but': 0, 'fake': 0, 'barak': 0, 'obama': 0, 'happy': 0, 'lought': 0, 'sport': 0, 'basketball': 0,
+    'shout': 0, 'explaining': 0, 'but': 0, 'fake': 0, 'barak': 0, 'obama': 0, 'happy': 0, 'lough': 0, 'sport': 0, 'basketball': 0,
     'bro': 0
 }
 var gImgs = [
@@ -24,8 +24,11 @@ var gImgs = [
     { id: 14, url: 'img/aspect-ratios/14.jpg', keywords: ['trump'] },
     { id: 15, url: 'img/aspect-ratios/15.jpg', keywords: ['baby'] },
     { id: 16, url: 'img/aspect-ratios/16.jpg', keywords: ['dogs', 'animals'] },
-    { id: 17, url: 'img/aspect-ratios/17.jpg', keywords: ['barak', 'obama', 'happy', 'lought'] },
+    { id: 17, url: 'img/aspect-ratios/17.jpg', keywords: ['barak', 'obama', 'happy', 'lough'] },
     { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['sport', 'basketball', 'bro'] },
+];
+
+var gSavedMemes = [
 ];
 
 const fonts = ['Impact', 'Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
@@ -49,14 +52,17 @@ var gMeme = {
         }
     ]
 }
+// var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
 
 var gFont = 'Impact';
-var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
 var gFilterBy = '';
 const gTextSizeChange = 5;
 
 // =======================================================================================================
 
+function currLine(){
+    return gMeme.lines[gMeme.selectedLineIdx];
+}
 
 function getImgs() {
     var regex = new RegExp(gFilterBy, 'i')
@@ -64,6 +70,23 @@ function getImgs() {
         return regex.test(JSON.stringify(img.keywords))
     })
     return imgs;
+}
+
+function getSavedMemes(){
+    console.log(gSavedMemes);
+    var savedMemes = loadFromStorage('gMemesDB')
+    return savedMemes;
+}
+
+function saveMeme(){
+    const data = gCanvas.toDataURL();
+    const dataToSave = {url:data};
+    gSavedMemes.unshift(dataToSave)
+    saveToStorage('gMemesDB',gSavedMemes);
+
+    // const data = gMeme;
+    // gSavedMemes.unshift(data);
+    // saveToStorage('gMemesDB',gSavedMemes);
 }
 
 function getKeywords() {
@@ -81,7 +104,7 @@ function cleanText() {
     gMeme.lines.splice(1, gMeme.lines.length)
     backToDefault();
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    drawTextNew(currLine().txt);
 }
 
 function cleanLine() {
@@ -95,7 +118,7 @@ function cleanLine() {
         backToDefault()
     }
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    drawTextNew(currLine().txt);
 }
 
 function backToDefault() {
@@ -117,16 +140,16 @@ function backToDefault() {
 function addLine() {
     gMeme.selectedLineIdx = gMeme.lines.length; // and not ++ to secure adding line after choosing not the last line.
     gMeme.lines.push({})
-    var currLine = gMeme.lines[gMeme.selectedLineIdx];
-    currLine.txt = '';
-    currLine.size = 40;
-    currLine.align = 'center';
-    currLine.fontColor = 'white';
-    currLine.strokeColor = 'black';
-    currLine.x = getX();
-    currLine.y = getY();
-    gMeme.lines[gMeme.selectedLineIdx].borderY = getY() - 20;
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);   //    to erease old border
+    // var currLine = currLine();
+    currLine().txt = '';
+    currLine().size = 40;
+    currLine().align = 'center';
+    currLine().fontColor = 'white';
+    currLine().strokeColor = 'black';
+    currLine().x = getX();
+    currLine().y = getY();
+    currLine().borderY = getY() - 20;
+    drawTextNew(currLine().txt);   //    to erease old border
 
 }
 
@@ -138,7 +161,7 @@ function downloadMeme(elLink) {
 
 
 function drawTextNew(text) {
-    gMeme.lines[gMeme.selectedLineIdx].txt = text;
+    currLine().txt = text;
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImage(gImg);
     if (gIsBorder) {
@@ -181,7 +204,7 @@ function setTextPos(line) {
 }
 
 function getX() {
-    switch (gMeme.lines[gMeme.selectedLineIdx].align) {
+    switch (currLine().align) {
         case 'center':
             return gCanvas.width / 2;
         case 'left':
@@ -215,58 +238,58 @@ function getYshift() {
 
 function drawBorder() {
     x = 3;
-    y = gMeme.lines[gMeme.selectedLineIdx].borderY;
+    y = currLine().borderY;
     gCtx.beginPath();
     gCtx.lineWidth = 2;
-    gCtx.rect(x, y, gCanvas.width - 7, gMeme.lines[gMeme.selectedLineIdx].size)
+    gCtx.rect(x, y, gCanvas.width - 7, currLine().size)
     gCtx.strokeStyle = 'white';
     gCtx.stroke();
 }
 
 function incTextSize() {
-    gMeme.lines[gMeme.selectedLineIdx].size += gTextSizeChange;
+    currLine().size += gTextSizeChange;
     if (gMeme.selectedLineIdx === 1) {
-        gMeme.lines[gMeme.selectedLineIdx].borderY -= gTextSizeChange;
-    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY -= gTextSizeChange/2;
-    gMeme.lines[gMeme.selectedLineIdx].y += getYshift();
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+        currLine().borderY -= gTextSizeChange;
+    } else if (gMeme.selectedLineIdx >= 2) currLine().borderY -= gTextSizeChange/2;
+    currLine().y += getYshift();
+    drawTextNew(currLine().txt);
 }
 
 function decTextSize() {
-    gMeme.lines[gMeme.selectedLineIdx].size -= gTextSizeChange;
+    currLine().size -= gTextSizeChange;
     if (gMeme.selectedLineIdx === 1) {
-        gMeme.lines[gMeme.selectedLineIdx].borderY += gTextSizeChange;
-    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY += gTextSizeChange/2;
-    gMeme.lines[gMeme.selectedLineIdx].y -= getYshift();
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+        currLine().borderY += gTextSizeChange;
+    } else if (gMeme.selectedLineIdx >= 2) currLine().borderY += gTextSizeChange/2;
+    currLine().y -= getYshift();
+    drawTextNew(currLine().txt);
 }
 
 function textToLeft() {
-    gMeme.lines[gMeme.selectedLineIdx].align = 'left';
-    gMeme.lines[gMeme.selectedLineIdx].x = getX();
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    currLine().align = 'left';
+    currLine().x = getX();
+    drawTextNew(currLine().txt);
 }
 
 function textToCenter() {
-    gMeme.lines[gMeme.selectedLineIdx].align = 'center';
-    gMeme.lines[gMeme.selectedLineIdx].x = getX();
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    currLine().align = 'center';
+    currLine().x = getX();
+    drawTextNew(currLine().txt);
 }
 
 function textToRight() {
-    gMeme.lines[gMeme.selectedLineIdx].align = 'right';
-    gMeme.lines[gMeme.selectedLineIdx].x = getX();
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    currLine().align = 'right';
+    currLine().x = getX();
+    drawTextNew(currLine().txt);
 }
 
 function setStrokeColor(color) {
-    gMeme.lines[gMeme.selectedLineIdx].strokeColor = color;
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    currLine().strokeColor = color;
+    drawTextNew(currLine().txt);
 }
 
 function setFontColor(color) {
-    gMeme.lines[gMeme.selectedLineIdx].fontColor = color;
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    currLine().fontColor = color;
+    drawTextNew(currLine().txt);
 }
 
 function chooseRow() {
@@ -275,30 +298,27 @@ function chooseRow() {
     } else {
         gMeme.selectedLineIdx--;
     }
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt); /// to draw the border 
+    drawTextNew(currLine().txt); /// to draw the border 
 }
 
 function changeFont(font) {
     gFont = font;
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    drawTextNew(currLine().txt);
 }
 
 function lineDown() {
-    gMeme.lines[gMeme.selectedLineIdx].y += gTextSizeChange;
-    gMeme.lines[gMeme.selectedLineIdx].borderY += gTextSizeChange;
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    currLine().y += gTextSizeChange;
+    currLine().borderY += gTextSizeChange;
+    drawTextNew(currLine().txt);
 }
 
 function lineUp() {
-    gMeme.lines[gMeme.selectedLineIdx].y -= gTextSizeChange;
-    gMeme.lines[gMeme.selectedLineIdx].borderY -= gTextSizeChange;
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    currLine().y -= gTextSizeChange;
+    currLine().borderY -= gTextSizeChange;
+    drawTextNew(currLine().txt);
 }
 
 function setFilter(filterBy) {
     gFilterBy = filterBy;
 }
 
-function currLine(){
-    return gMeme.lines[gMeme.selectedLineIdx];
-}

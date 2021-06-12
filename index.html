@@ -18,6 +18,7 @@
             <!-- <div class="nav"> -->
             <ul class="nav flex clean-list">
                 <li class="nav-gallery pointer" onclick="onToGallery()">Gallery</li>
+                <li class="nav-memes pointer" onclick="onToMemes()">Memes</li>
                 <li>About</li>
             </ul>
             <!-- </div> -->
@@ -63,7 +64,7 @@
                 <img type="color" class="editor-icons stroke pointer" src="ICONS/text stroke.png" />
                 <img class="editor-icons color pointer" src="ICONS/paint-board-and-brush.png" />
                 <!-- <div class="editor-icons stickers" class="stickers">stickers</div> -->
-                <button class="save pointer" onclick="onShareClick()">Save</button>
+                <button class="save pointer" onclick="onSaveClick()">Save</button>
                 <!-- <button class="download" href="#" onclick="downloadMeme(this)" download="file-name">download</button> -->
                 <a class="download" href="#" onclick="downloadMeme(this)" download="memegen"><button
                         class="pointer">Download</button></a>
@@ -82,6 +83,8 @@
 
     <script src="js/main.js"></script>
     <script src="js/meme-service.js"></script>
+    <script src="js/storge-service.js"></script>
+
 </body>
 
 </html>
