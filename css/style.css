@@ -1,13 +1,13 @@
-*{
+* {
     box-sizing: border-box;
 }
+
 body {
     margin: 0;
     overflow: overlay;
 }
 
-
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6 {
     /* margin: 0 0 .866em; */
     margin: 0;
 }
@@ -25,12 +25,13 @@ h1, h2, h3, h4, h5, h6{
     justify-content: center;
 }
 
-.img-container>img{
+.img-container>img {
     cursor: pointer;
 }
-.img-container>img:hover{
+
+.img-container>img:hover {
     /* border:3px solid black; */
-    box-shadow: 0 0 0 5px   #ff7f00;
+    box-shadow: 0 0 0 5px #ff7f00;
 }
 
 img {
@@ -50,26 +51,24 @@ img {
     /* align-content: center; */
 }
 
-
-.main-header .nav li:not(:last-child){
-border-right: 1px solid #8a8a8a;
+.main-header .nav li:not(:last-child) {
+    border-right: 1px solid #8a8a8a;
 }
 
-.main-header .nav li{
+.main-header .nav li {
     padding: 0 0.312rem;
 }
-.main-header .nav li:hover{
-    text-decoration-line:underline;
 
+.main-header .nav li:hover {
+    text-decoration-line: underline;
 }
-
 
 .main-content .scnd-header {
     padding: 10px 25px;
 }
-.scnd-header .hashtags{
-    /* width: 300px; */
 
+.scnd-header .hashtags {
+    /* width: 300px; */
 }
 
 .scnd-header span {
@@ -77,8 +76,9 @@ border-right: 1px solid #8a8a8a;
     margin-left: 1em;
     cursor: pointer;
 }
+
 .scnd-header span:hover {
-    text-decoration-line:underline;
+    text-decoration-line: underline;
 }
 
 /* .scnd-header .search .text{
@@ -113,17 +113,18 @@ canvas {
 .editor-grid .text {
     height: 100%;
     border-radius: 0.625rem;
-
     grid-column: 1/ span 5;
 }
+
 .editor-grid .text:hover {
-background-color: #ff7f00;
+    background-color: #ff7f00;
 }
+
 .editor-grid .text:focus {
     background-color: #ff7f00;
 }
 
-.editor-grid div{
+.editor-grid div {
     background-color: white;
     font-size: 1.625rem;
     text-align: center;
@@ -131,7 +132,6 @@ background-color: #ff7f00;
     border-radius: 0.625rem;
     cursor: pointer;
 }
-
 
 .editor-icons.updown {
     grid-area: 2/5/3/6;
@@ -168,13 +168,12 @@ background-color: #ff7f00;
 .editor-grid select {
     border-radius: 10px;
     width: 7.25rem;
-
     grid-column: 1 / span 3;
     grid-row: 4/5;
 }
+
 .editor-grid select:hover {
     background-color: #ff7f00;
-
 }
 
 .editor-icons.stroke {
@@ -183,7 +182,6 @@ background-color: #ff7f00;
 
 .editor-icons.color {
     grid-area: 4/5/5/6;
-
 }
 
 .editor-icons.stickers {
@@ -194,33 +192,30 @@ background-color: #ff7f00;
     grid-area: 6/4/7/6;
 }
 
-.editor-grid .download{
-    grid-area:6/1/7/4;
+.editor-grid .download {
+    grid-area: 6/1/7/4;
     margin: 0;
 }
 
-.editor-grid .stroke-input{
-    border-radius:0.625rem;
-
+.editor-grid .stroke-input {
+    border-radius: 0.625rem;
     width: 2rem;
     height: 2rem;
-
     opacity: 0;
     position: relative;
     top: -2.3125rem;
     left: 7.875rem;
 }
-.editor-grid .font-input{
+
+.editor-grid .font-input {
     border-radius: 0.625rem;
-
-/* z-index: -1; */
-width: 2rem;
-height: 2rem;
-
+    /* z-index: -1; */
+    width: 2rem;
+    height: 2rem;
     opacity: 0;
     position: relative;
     top: -2.3125rem;
-    left:7.875rem;
+    left: 7.875rem;
 }
 
 img.editor-icons {
@@ -230,18 +225,23 @@ img.editor-icons {
     height: 2rem;
     border-radius: 0.625rem;
 }
-img.editor-icons:hover  {
-background-color: #ff7f00;
-}
 
-.editor-grid button{
-    height: 2rem;
-    border-radius: 0.625rem;
-}
-.editor-grid button:hover,.editor-grid div:hover{
+img.editor-icons:hover {
     background-color: #ff7f00;
 }
 
+.editor-grid a.download {
+    grid-area: -1/1/-2/3;
+}
+
+.editor-grid button {
+    height: 2rem;
+    border-radius: 0.625rem;
+}
+
+.editor-grid button:hover, .editor-grid div:hover {
+    background-color: #ff7f00;
+}
 
 .footer {
     color: white;
@@ -251,7 +251,8 @@ background-color: #ff7f00;
 }
 
 /*============================== HELPERS =========================================*/
-.pointer{
+
+.pointer {
     cursor: pointer;
 }
 
@@ -273,26 +274,23 @@ background-color: #ff7f00;
     padding: 0;
 }
 
-
-
 /* ============================================================= */
 
-@media (max-width:680px){
-    .main-layout{
+@media (max-width:680px) {
+    .main-layout {
         max-width: 450px;
     }
-
     .scnd-header {
         display: block;
     }
     .main-layout {
         padding: 0;
     }
-    canvas{
-        width:100%;
+    canvas {
+        width: 100%;
         margin-bottom: 1rem;
     }
-    .meme-editor{
+    .meme-editor {
         justify-content: center;
     }
 }

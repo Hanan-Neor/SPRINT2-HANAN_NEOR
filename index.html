@@ -12,82 +12,61 @@
 <body onload="init()">
     <div class="main-layout">
         <header class="main-header flex justify-content align-center">
-            <div class="logo"><h3>memegen</h3></div>
+            <div class="logo">
+                <h3>memegen</h3>
+            </div>
             <!-- <div class="nav"> -->
-                <ul class="nav flex clean-list">
-                    <li class="nav-gallery pointer" onclick="onToGallery()">Gallery</li>
-                    <li>About</li>
-                </ul>
+            <ul class="nav flex clean-list">
+                <li class="nav-gallery pointer" onclick="onToGallery()">Gallery</li>
+                <li>About</li>
+            </ul>
             <!-- </div> -->
         </header>
 
         <div class="main-content">
             <div class="scnd-header flex justify-content">
                 <div class="search">
-                    <input type="text" autofocus placeholder="Type to search" oninput="onSetFilter(this.value)" >
+                    <input type="text" autofocus placeholder="Type to search" oninput="onSetFilter(this.value)">
                 </div>
-                <div class="hashtags " >
-                    <!-- <span class="">funny</span>
-                    <span class="">commics</span>
-                    <span class="">dogs</span>
-                    <span class="">drinks</span>
-                    <span class="">books</span>
-                    <span class="">more...</span>
-                    <span class="">funny</span>
-                    <span class="">commics</span>
-                    <span class="">dogs</span>
-                    <span class="">drinks</span>
-                    <span class="">books</span>
-                    <span class="">more...</span>
-                    <span class="">funny</span>
-                    <span class="">commics</span>
-                    <span class="">dogs</span>
-                    <span class="">drinks</span>
-                    <span class="">books</span>
-                    <span class="">more...</span> -->
+                <div class="hashtags ">
                 </div>
-
             </div>
-
             <div class="img-container">
-               
             </div>
-           
         </div>
 
-
-
-        <!-- <div class="meme-editor flex"> -->
         <div class="meme-editor">
-
             <canvas width="400"></canvas>
-
-
             <div class="editor-grid">
-                <input class="text" type="text" onclick="onDrawBorder()" oninput="drawTextNew(this.value)" autofocus placeholder="very funny" style="text-align: center;">
+                <input class="text" type="text" onclick="onDrawBorder()" oninput="drawTextNew(this.value)" autofocus
+                    placeholder="very funny" style="text-align: center;">
+                <div onclick="onLineDown()"> ⇩</div>
 
-               <div  onclick="onLineDown()"> ⇩</div>
-
-                <img class="editor-icons updown pointer" src="ICONS/up-and-down-opposite-double-arrows-side-by-side.png" onclick="onChooseRow()"/>
+                <img class="editor-icons updown pointer" src="ICONS/up-and-down-opposite-double-arrows-side-by-side.png"
+                    onclick="onChooseRow()" />
                 <img class="editor-icons add pointer" src="ICONS/add.png" onclick="onAddLine()">
-                <img class="editor-icons trash pointer" src="ICONS/trash.png" onclick="onCleanText()" />
+                <img class="editor-icons trash pointer" src="ICONS/trash.png" onclick="onCleanLine()" />
 
                 <div onclick="onLineUp()">⇧</div>
 
-                <img class="editor-icons inc-font pointer" src="ICONS/increase font - icon.png" onclick="onIncTextSize()"/>
-                <img class="editor-icons dec-font pointer" src="ICONS/decrease font - icon.png" onclick="onDecTextSize()"/>
-                <img class="editor-icons to-left pointer" src="ICONS/align-to-left.png" onclick="onTextToLeft()"/>
-                <img class="editor-icons to-center pointer" src="ICONS/center-text-alignment.png" onclick="onTextToCenter()"/>
-                <img class="editor-icons to-right pointer" src="ICONS/align-to-right.png" onclick="onTextToRight()"/>
+                <img class="editor-icons inc-font pointer" src="ICONS/increase font - icon.png"
+                    onclick="onIncTextSize()" />
+                <img class="editor-icons dec-font pointer" src="ICONS/decrease font - icon.png"
+                    onclick="onDecTextSize()" />
+                <img class="editor-icons to-left pointer" src="ICONS/align-to-left.png" onclick="onTextToLeft()" />
+                <img class="editor-icons to-center pointer" src="ICONS/center-text-alignment.png"
+                    onclick="onTextToCenter()" />
+                <img class="editor-icons to-right pointer" src="ICONS/align-to-right.png" onclick="onTextToRight()" />
                 <select class="pointer" onchange="onChangeFont(this.value)">
-                    
+
                 </select>
-                <img type="color" class="editor-icons stroke pointer" src="ICONS/text stroke.png"/>
+                <img type="color" class="editor-icons stroke pointer" src="ICONS/text stroke.png" />
                 <img class="editor-icons color pointer" src="ICONS/paint-board-and-brush.png" />
                 <!-- <div class="editor-icons stickers" class="stickers">stickers</div> -->
                 <button class="save pointer" onclick="onShareClick()">Save</button>
                 <!-- <button class="download" href="#" onclick="downloadMeme(this)" download="file-name">download</button> -->
-                <a class="download" href="#" onclick="downloadMeme(this)" download="memegen"><button class="pointer">Download</button></a>
+                <a class="download" href="#" onclick="downloadMeme(this)" download="memegen"><button
+                        class="pointer">Download</button></a>
                 <input class="stroke-input pointer" type="color" oninput="onStrokeColor(this.value)">
                 <!-- <input class="font-input pointer" type="color" oninput="onFontColor(this.value)" onclick="onFontColor(this.value)"> -->
                 <input class="font-input pointer" type="color" oninput="onFontColor(this.value)">

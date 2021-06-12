@@ -53,13 +53,14 @@ var gMeme = {
 var gFont = 'Impact';
 var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
 var gFilterBy = '';
+const gTextSizeChange = 5;
 
 // =======================================================================================================
 
 
 function getImgs() {
     var regex = new RegExp(gFilterBy, 'i')
-    var imgs = gImgs.filter(function(img){
+    var imgs = gImgs.filter(function (img) {
         return regex.test(JSON.stringify(img.keywords))
     })
     return imgs;
@@ -68,7 +69,6 @@ function getImgs() {
 function getKeywords() {
     return gKeywords;
 }
-
 
 function getCanvasHeight(imgWidth, imgHeight) {
     // var canWidth = document.querySelector('canvas');
@@ -80,17 +80,17 @@ function getCanvasHeight(imgWidth, imgHeight) {
 function cleanText() {
     backToDefault();
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-    drawImage(gImg); //////// -------------------- Is this Stupid? how to Backspace without ereaseing the picture?
+    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 
 function cleanLine() {
-    if(gMeme.selectedLineIdx!= 0){
-        gMeme.lines.splice(gMeme.selectedLineIdx,1)
+    if (gMeme.selectedLineIdx != 0) {
+        gMeme.lines.splice(gMeme.selectedLineIdx, 1)
         gMeme.selectedLineIdx--;
-    }else if(gMeme.lines.length != 1){
-        gMeme.lines.splice(gMeme.selectedLineIdx,1)
+    } else if (gMeme.lines.length != 1) {
+        gMeme.lines.splice(gMeme.selectedLineIdx, 1)
         gMeme.selectedLineIdx = gMeme.lines.length - 1;
-    }else{
+    } else {
         backToDefault()
     }
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
@@ -109,12 +109,12 @@ function backToDefault() {
         obj.strokeColor = 'black';
         obj.x = gCanvas.width / 2;
         obj.y = 30;
-        obj.borderY= 10;
+        obj.borderY = 10;
     })
 }
 
 function addLine() {
-    gMeme.selectedLineIdx++;
+    gMeme.selectedLineIdx = gMeme.lines.length; // and not ++ to secure adding line after choosing not the last line.
     gMeme.lines.push({})
     var currLine = gMeme.lines[gMeme.selectedLineIdx];
     currLine.txt = '';
@@ -137,7 +137,6 @@ function downloadMeme(elLink) {
 
 
 function drawTextNew(text) {
-
     gMeme.lines[gMeme.selectedLineIdx].txt = text;
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawImage(gImg);
@@ -147,10 +146,7 @@ function drawTextNew(text) {
     gMeme.lines.forEach(line => {
         var x = line.x;
         var y = line.y;
-
-        // setTextPos(line);
         gCtx.textBaseline = 'middle';
-
         gCtx.font = `${line.size}px ${gFont},Impact,Segoe UI Semibold`;
         gCtx.lineWidth = 2;
         gCtx.strokeStyle = line.strokeColor;
@@ -186,15 +182,10 @@ function setTextPos(line) {
 function getX() {
     switch (gMeme.lines[gMeme.selectedLineIdx].align) {
         case 'center':
-            // gCtx.textAlign = 'center';
             return gCanvas.width / 2;
-
         case 'left':
-            // gCtx.textAlign = 'left';
             return 5;
-
         case 'right':
-            // gCtx.textAlign = 'right';
             return gCanvas.width - 5;
     }
 }
@@ -213,43 +204,38 @@ function getY() {
 function getYshift() {
     switch (gMeme.selectedLineIdx) {
         case 0:
-            return 2.5;
+            return gTextSizeChange/2;
         case 1:
-            return -2.5;
+            return -gTextSizeChange/2;
         default:
             return 0;
     }
 }
-// function drawBorder(x=10, y=10){
+
 function drawBorder() {
     x = 3;
     y = gMeme.lines[gMeme.selectedLineIdx].borderY;
-    // var y= gMeme.lines[gMeme.selectedLineIdx].size+5;
     gCtx.beginPath();
     gCtx.lineWidth = 2;
-
-    // gCtx.rect(x, y, gCanvas.width - 20, gMeme.lines[gMeme.selectedLineIdx].size)
     gCtx.rect(x, y, gCanvas.width - 7, gMeme.lines[gMeme.selectedLineIdx].size)
     gCtx.strokeStyle = 'white';
     gCtx.stroke();
 }
 
 function incTextSize() {
-
-    gMeme.lines[gMeme.selectedLineIdx].size += 5;
+    gMeme.lines[gMeme.selectedLineIdx].size += gTextSizeChange;
     if (gMeme.selectedLineIdx === 1) {
-        gMeme.lines[gMeme.selectedLineIdx].borderY -= 5;
-    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY -= 2.5;
+        gMeme.lines[gMeme.selectedLineIdx].borderY -= gTextSizeChange;
+    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY -= gTextSizeChange/2;
     gMeme.lines[gMeme.selectedLineIdx].y += getYshift();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 
 function decTextSize() {
-    gMeme.lines[gMeme.selectedLineIdx].size -= 5;
+    gMeme.lines[gMeme.selectedLineIdx].size -= gTextSizeChange;
     if (gMeme.selectedLineIdx === 1) {
-        gMeme.lines[gMeme.selectedLineIdx].borderY += 5;
-    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY += 2.5;
-
+        gMeme.lines[gMeme.selectedLineIdx].borderY += gTextSizeChange;
+    } else if (gMeme.selectedLineIdx >= 2) gMeme.lines[gMeme.selectedLineIdx].borderY += gTextSizeChange/2;
     gMeme.lines[gMeme.selectedLineIdx].y -= getYshift();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
@@ -259,11 +245,13 @@ function textToLeft() {
     gMeme.lines[gMeme.selectedLineIdx].x = getX();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
+
 function textToCenter() {
     gMeme.lines[gMeme.selectedLineIdx].align = 'center';
     gMeme.lines[gMeme.selectedLineIdx].x = getX();
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
+
 function textToRight() {
     gMeme.lines[gMeme.selectedLineIdx].align = 'right';
     gMeme.lines[gMeme.selectedLineIdx].x = getX();
@@ -287,7 +275,6 @@ function chooseRow() {
         gMeme.selectedLineIdx--;
     }
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt); /// to draw the border 
-
 }
 
 function changeFont(font) {
@@ -295,18 +282,22 @@ function changeFont(font) {
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 
-function lineDown(){
-    gMeme.lines[gMeme.selectedLineIdx].y+=5;
-    gMeme.lines[gMeme.selectedLineIdx].borderY+=5
+function lineDown() {
+    gMeme.lines[gMeme.selectedLineIdx].y += gTextSizeChange;
+    gMeme.lines[gMeme.selectedLineIdx].borderY += gTextSizeChange;
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 
-function lineUp(){
-    gMeme.lines[gMeme.selectedLineIdx].y-=5;
-    gMeme.lines[gMeme.selectedLineIdx].borderY-=5
+function lineUp() {
+    gMeme.lines[gMeme.selectedLineIdx].y -= gTextSizeChange;
+    gMeme.lines[gMeme.selectedLineIdx].borderY -= gTextSizeChange;
     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
 }
 
 function setFilter(filterBy) {
     gFilterBy = filterBy;
+}
+
+function currLine(){
+    return gMeme.lines[gMeme.selectedLineIdx];
 }

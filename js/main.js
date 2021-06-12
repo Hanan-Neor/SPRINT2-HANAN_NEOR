@@ -1,6 +1,6 @@
 
 var gCanvas = document.querySelector('canvas');
-var gCtx
+var gCtx;
 var gImg;
 var gIsBorder = true;
 
@@ -11,7 +11,10 @@ function init() {
     renderKeywords();
     gCanvas = document.querySelector('canvas');
     gCtx = gCanvas.getContext('2d');
+    quaryselectors();
+}
 
+function quaryselectors() {
     document.querySelector('.editor-grid .font-input').addEventListener('mouseover', function () {
         document.querySelector('.editor-icons.color').style.background = "rgb(255, 127, 0)";
     })
@@ -24,17 +27,15 @@ function init() {
     document.querySelector('.editor-grid .stroke-input').addEventListener('mouseout', function () {
         document.querySelector('.editor-icons.stroke').style.background = "white";
     })
-
-    // document.querySelector('.editor-grid .download').addEventListener('mouseover', function () {
-    //     gMeme.lines[gMeme.selectedLineIdx].borderY = 1000;
-    //     drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
-    // })
     document.querySelector('.editor-grid .text').addEventListener('blur', function () {
         gIsBorder = false;
-        drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+        drawTextNew(getCurrLine().txt);
     });
 }
 
+function getCurrLine(){
+   return currLine();
+}
 
 function renderImgs(imgs) {
     var strHTML = imgs.map(image => {
@@ -52,7 +53,6 @@ function onToGallery() {
     document.querySelector('.meme-editor').style.display = "none";
     document.querySelector('.meme-editor').classList.remove('.flex');
 }
-
 
 function renderKeywords() {
     var keywords = getKeywords();
@@ -80,7 +80,7 @@ function onImgClick(el) {
     drawImage(el);
     document.querySelector('.main-content').style.display = "none";
     document.querySelector('.meme-editor').style.display = "flex";
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);
+    drawTextNew(getCurrLine().txt);
     onCleanText()
     renderFontsOptions();
     document.querySelector('.editor-grid .text').focus();
@@ -104,11 +104,9 @@ function drawImage(el) {
     gCtx.drawImage(el, 0, 0, gCanvas.width, gCanvas.height);
 }
 
-
 function onShareClick() {
 
 }
-
 
 function drawImageById(obMeme) {
     meme = getElMemeById(obMeme);
@@ -117,21 +115,19 @@ function drawImageById(obMeme) {
     gCtx.drawImage(meme, 0, 0, gCanvas.width, gCanvas.height);
 }
 
-
 function getElMemeById(obMeme) {
     elMeme = `<img id=${obMeme.id} src=${image.url}"/>`
 }
 
-
 function onAddLine() {
     gIsBorder = true;
-    if(!document.querySelector('.editor-grid .text').value){
-    drawTextNew(gMeme.lines[gMeme.selectedLineIdx].txt);   //    to keep the border of the current line
-    return;
+    if (!document.querySelector('.editor-grid .text').value) {
+        drawTextNew(getCurrLine().txt);   //    to keep the border of the current line
+    document.querySelector('.editor-grid .text').focus();
+        return;
     }
     addLine();
     document.querySelector('.editor-grid .text').focus();
-
     document.querySelector('.editor-grid .text').value = '';
     document.querySelector('.editor-grid .text').style.textAlign = "center";
 }
@@ -139,47 +135,44 @@ function onAddLine() {
 
 function onIncTextSize() {
     gIsBorder = true;
-
     incTextSize();
 }
 
 function onDecTextSize() {
     gIsBorder = true;
-
     decTextSize();
 }
 
 function onTextToLeft() {
     gIsBorder = true;
-
     document.querySelector('.editor-grid .text').style.textAlign = "left";
     textToLeft();
 }
+
 function onTextToCenter() {
     gIsBorder = true;
-
     document.querySelector('.editor-grid .text').style.textAlign = "center";
     textToCenter();
 }
+
 function onTextToRight() {
     gIsBorder = true;
-
     document.querySelector('.editor-grid .text').style.textAlign = "right";
     textToRight();
 }
 
-// function onCleanText() {
-//     gIsBorder = true;
-//     cleanText();
-//     document.querySelector('.editor-grid .text').style.textAlign = "center";
-//     document.querySelector('.editor-grid .text').value = '';
-//     document.querySelector('.editor-grid .text').focus();
-// }
-function onCleanText() {
+function onCleanLine() {
     gIsBorder = true;
     cleanLine();
-    document.querySelector('.editor-grid .text').style.textAlign = gMeme.lines[gMeme.selectedLineIdx].align;
-    document.querySelector('.editor-grid .text').value = gMeme.lines[gMeme.selectedLineIdx].txt;
+    document.querySelector('.editor-grid .text').style.textAlign = getCurrLine().align;
+    document.querySelector('.editor-grid .text').value = getCurrLine().txt;
+    document.querySelector('.editor-grid .text').focus();
+}
+function onCleanText() {
+    gIsBorder = true;
+    cleanText();
+    document.querySelector('.editor-grid .text').style.textAlign = getCurrLine().align;
+    document.querySelector('.editor-grid .text').value = getCurrLine().txt;
     document.querySelector('.editor-grid .text').focus();
 }
 
@@ -200,37 +193,20 @@ function renderCanvas(text, x, y) {
 
 function onChooseRow() {
     gIsBorder = true;
-
     chooseRow();
-    document.querySelector('.editor-grid .text').value = gMeme.lines[gMeme.selectedLineIdx].txt;
-    document.querySelector('.editor-grid .text').style.textAlign = gMeme.lines[gMeme.selectedLineIdx].align;
+    document.querySelector('.editor-grid .text').value = getCurrLine().txt;
+    document.querySelector('.editor-grid .text').style.textAlign = getCurrLine().align;
 }
 
 function onChangeFont(font) {
     gIsBorder = true;
-
     changeFont(font);
 }
 
 function onDrawBorder() {
-
     gIsBorder = true;
     drawBorder();
 }
-
-// // function drawBorder(x=10, y=10){
-// function drawBorder(){
-//     var x =10;
-//     var y= getY()-20;
-//     // var y= gMeme.lines[gMeme.selectedLineIdx].size+5;
-//     gCtx.beginPath()
-//     gCtx.lineWidth = 2
-
-//     gCtx.rect(x,y,gCanvas.width-20,gMeme.lines[gMeme.selectedLineIdx].size)
-//     gCtx.strokeStyle = 'white';
-//     gCtx.stroke();
-// }
-
 
 function onLineDown() {
     gIsBorder = true;
@@ -242,7 +218,7 @@ function onLineUp() {
     lineUp();
 }
 
-function onSetFilter(txt){
+function onSetFilter(txt) {
     setFilter(txt);
     init();
 }
