@@ -34,6 +34,8 @@ var gSavedMemes = [
 const fonts = ['Impact', 'Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
 
 var gMeme = {
+    canvas:'',
+    url:'img/aspect-ratios//1.jpg',
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [
@@ -49,11 +51,15 @@ var gMeme = {
             y: 30,
             borderX: 10,
             borderY: 10,
+            middleLinePos:20,
+            isDrag: false,
+            // pos,
+            // size:300,
         }
     ]
 }
 // var gCurrLine = gMeme.lines[gMeme.selectedLineIdx];
-
+var gRaw;
 var gFont = 'Impact';
 var gFilterBy = '';
 const gTextSizeChange = 5;
@@ -73,21 +79,49 @@ function getImgs() {
 }
 
 function getSavedMemes(){
-    console.log(gSavedMemes);
     var savedMemes = loadFromStorage('gMemesDB')
+    console.log(gSavedMemes);
     return savedMemes;
 }
 
 function saveMeme(){
-    const data = gCanvas.toDataURL();
-    const dataToSave = {url:data};
-    gSavedMemes.unshift(dataToSave)
-    saveToStorage('gMemesDB',gSavedMemes);
-
-    // const data = gMeme;
-    // gSavedMemes.unshift(data);
+    // const data = gCanvas.toDataURL();
+    // const dataToSave = {url:data};
+    // gSavedMemes.unshift(dataToSave)
     // saveToStorage('gMemesDB',gSavedMemes);
+
+    gMeme.canvas = gCanvas.toDataURL();
+// console.log(gMeme.can);
+
+   const data = JSON.parse(JSON.stringify(gMeme));
+    gSavedMemes.unshift(data);
+    saveToStorage('gMemesDB',gSavedMemes);
 }
+
+function findElById(elUrl){
+    // var currMeme = gSavedMemes.find(meme => {
+    var currMeme = getSavedMemes().find(meme => {
+        console.log(meme);
+                return meme.url === elUrl;
+            })
+            // console.log(currImg);
+        
+            // return currImg.url;
+            return currMeme;
+
+
+}
+// function findImgById(imgId){
+//     console.log(imgId);
+//     // var imgId = document.querySelector('.img-container .img').id;
+//     var currImg = gImgs.find(img => {
+//         return img.id === imgId;
+//     })
+//     // console.log(currImg);
+
+//     // return currImg.url;
+//     return 'img/aspect-ratios/15.jpg';
+// }
 
 function getKeywords() {
     return gKeywords;
@@ -149,12 +183,16 @@ function addLine() {
     currLine().x = getX();
     currLine().y = getY();
     currLine().borderY = getY() - 20;
+    currLine().middleLinePos =getY() - 10;
     drawTextNew(currLine().txt);   //    to erease old border
 
 }
 
 
 function downloadMeme(elLink) {
+    gIsBorder = false;
+    drawTextNew(currLine().txt);
+
     const data = gCanvas.toDataURL();
     elLink.href = data;
 }
@@ -237,13 +275,25 @@ function getYshift() {
 }
 
 function drawBorder() {
-    x = 3;
-    y = currLine().borderY;
+   var x = 3;
+    var y = currLine().borderY;
     gCtx.beginPath();
     gCtx.lineWidth = 2;
-    gCtx.rect(x, y, gCanvas.width - 7, currLine().size)
+   gCtx.rect(x, y, gCanvas.width - 7, currLine().size)
+
     gCtx.strokeStyle = 'white';
     gCtx.stroke();
+
+
+// var yy = currLine().middleLinePos
+// gCtx.beginPath();
+// gCtx.lineWidth = 2;
+// gRaw =  gCtx.rect(x, yy, gCanvas.width - 7, 30)
+// gCtx.strokeStyle = 'red';
+// gCtx.stroke();
+
+
+
 }
 
 function incTextSize() {
@@ -259,6 +309,7 @@ function decTextSize() {
     currLine().size -= gTextSizeChange;
     if (gMeme.selectedLineIdx === 1) {
         currLine().borderY += gTextSizeChange;
+        // currLine().middleLinePos+=gTextSizeChange/2;
     } else if (gMeme.selectedLineIdx >= 2) currLine().borderY += gTextSizeChange/2;
     currLine().y -= getYshift();
     drawTextNew(currLine().txt);
@@ -298,6 +349,7 @@ function chooseRow() {
     } else {
         gMeme.selectedLineIdx--;
     }
+    // currLine().middleLinePos = 20;
     drawTextNew(currLine().txt); /// to draw the border 
 }
 

@@ -68,7 +68,15 @@ img {
 }
 
 .scnd-header .hashtags {
+    /* padding-right: 0.15rem; */
     /* width: 300px; */
+    /* z-index: -1; */
+    /* line-height: 1.5rem; */
+    height: 0px;
+}
+
+.show{
+
 }
 
 .scnd-header span {
@@ -103,6 +111,8 @@ canvas {
 }
 
 .editor-grid {
+    
+    /* max-width: 200px; */
     display: grid;
     grid-template-columns: repeat(5, auto);
     grid-template-rows: repeat(6, auto);
@@ -111,6 +121,7 @@ canvas {
 }
 
 .editor-grid .text {
+    font-size: 1rem;
     height: 100%;
     border-radius: 0.625rem;
     grid-column: 1/ span 5;
@@ -166,6 +177,7 @@ canvas {
 }
 
 .editor-grid select {
+    background-color: white;
     border-radius: 10px;
     width: 7.25rem;
     grid-column: 1 / span 3;
@@ -199,23 +211,26 @@ canvas {
 
 .editor-grid .stroke-input {
     border-radius: 0.625rem;
+    grid-area: 5/4/6/5;
+
     width: 2rem;
     height: 2rem;
     opacity: 0;
     position: relative;
     top: -2.3125rem;
-    left: 7.875rem;
+    /* left: 7.875rem; */
 }
 
 .editor-grid .font-input {
     border-radius: 0.625rem;
+    grid-area: 5/5/6/6;
     /* z-index: -1; */
     width: 2rem;
     height: 2rem;
     opacity: 0;
     position: relative;
     top: -2.3125rem;
-    left: 7.875rem;
+    /* left: 7.875rem; */
 }
 
 img.editor-icons {
@@ -235,6 +250,7 @@ img.editor-icons:hover {
 }
 
 .editor-grid button {
+    background-color: white;
     height: 2rem;
     border-radius: 0.625rem;
 }
@@ -293,4 +309,59 @@ img.editor-icons:hover {
     .meme-editor {
         justify-content: center;
     }
+
+
+    img.editor-icons {
+        /* 48px */
+        width: 3rem;
+        height: 3rem;
+    }
+
+
+
+    .editor-grid .text {
+        /* font-size: 1.375rem; */
+        font-size: 1.273rem;
+    }
+
+.editor-grid select {
+
+    font-size: 1.273rem;
+
+}
+    
+
+
+
+    .editor-grid .stroke-input {
+        width: 3rem;
+        height: 3rem;
+        /* opacity: 1; */
+        /* position: relative; */
+        top: -3.3125rem;
+        /* left: 10.875rem; */
+    }
+    
+    .editor-grid .font-input {
+        width: 3rem;
+        height: 3rem;
+        /* opacity: 1; */
+        top: -3.3125rem;
+        /* left: 10.875rem; */
+    }
+
+
+
+    .editor-grid div {
+        /* font-size: 2.4375rem; */
+        font-size: 32px;
+    }
+    
+.editor-grid button {
+    font-size: 1.273rem;
+}
+
+    
+
+    
 }

@@ -6,7 +6,7 @@ var gIsBorder = true;
 
 function init() {
     // console.dir(gCanvas)
-        var imgs = getImgs();
+    var imgs = getImgs();
     renderImgs(imgs);
     renderKeywords();
     gCanvas = document.querySelector('canvas');
@@ -15,6 +15,10 @@ function init() {
 }
 
 function quaryselectors() {
+
+    addMouseListeners()
+    addTouchListeners()
+
     document.querySelector('.editor-grid .font-input').addEventListener('mouseover', function () {
         document.querySelector('.editor-icons.color').style.background = "rgb(255, 127, 0)";
     })
@@ -27,15 +31,17 @@ function quaryselectors() {
     document.querySelector('.editor-grid .stroke-input').addEventListener('mouseout', function () {
         document.querySelector('.editor-icons.stroke').style.background = "white";
     })
-    document.querySelector('.editor-grid .text').addEventListener('blur', function () {
-        gIsBorder = false;
-        drawTextNew(getCurrLine().txt);
-    });
+    // document.querySelector('.editor-grid .text').addEventListener('blur', function () {
+    //     gIsBorder = false;
+    //     drawTextNew(getCurrLine().txt);
+    // });
 }
 
 function getCurrLine() {
     return currLine();
 }
+
+
 
 function renderImgs(imgs) {
     var strHTML = imgs.map(image => {
@@ -58,15 +64,48 @@ function onToGallery() {
 
 function onToMemes() {
     var imgs = getSavedMemes();
-if(!getSavedMemes()){
-    document.querySelector('.img-container').innerHTML = 'nothing to show yet'
-}else renderImgs(imgs);
-
+    if (!getSavedMemes()) {
+        document.querySelector('.img-container').innerHTML = 'nothing to show yet'
+        // } else renderImgs(imgs);
+    } else renderSavedImgs(imgs);
     document.querySelector('.main-content').style.display = "grid";
     document.querySelector('.meme-editor').style.display = "none";
     document.querySelector('.scnd-header').style.display = "none";
     document.querySelector('.meme-editor').classList.remove('.flex');
 }
+
+function renderSavedImgs(savedMemesObjects) {
+    console.log(savedMemesObjects);
+    var strHTML = savedMemesObjects.map(savedMemesObject => {
+        console.log(savedMemesObject);
+        return `
+<img id=${savedMemesObject.selectedImgId} data=${savedMemesObject} src=${savedMemesObject.canvas} onclick="onSavedImageClick(this)"/>
+
+`
+        //         return `
+        // <img id=${savedMemesObject.selectedImgId} meme="${savedMemesObject}" src=${savedMemesObject.canvas} onclick="onSavedImageClick(this)"/>
+
+        // `
+        //         return `
+        // <img id=${savedMemesObject.selectedImgId} src=${findImgById(savedMemesObject.selectedImgId).url} onclick="onSavedImgClick(this)"/>
+
+        // `
+    })
+    document.querySelector('.img-container').innerHTML = strHTML.join('');
+}
+
+function onSavedImageClick(el) {
+    // drawImage(el);
+    gImg = el;
+    // gMeme = findElById(el.src);
+    document.querySelector('.main-content').style.display = "none";
+    document.querySelector('.meme-editor').style.display = "flex";
+    drawTextNew(getCurrLine().txt);
+    renderFontsOptions();
+    // document.querySelector('.editor-grid .text').focus();
+}
+
+
 
 function renderKeywords() {
     var keywords = getKeywords();
@@ -90,6 +129,7 @@ function renderKeywords() {
 }
 
 function onImgClick(el) {
+    gMeme.url = el.src;
     gMeme.selectedImgId = el.id;
     drawImage(el);
     document.querySelector('.main-content').style.display = "none";
@@ -119,6 +159,8 @@ function drawImage(el) {
 }
 
 function onSaveClick() {
+    gIsBorder = false;
+    drawTextNew(currLine().txt);
     saveMeme();
     onToMemes();
 }
@@ -136,8 +178,10 @@ function getElMemeById(obMeme) {
 
 function onAddLine() {
     gIsBorder = true;
-    if (!document.querySelector('.editor-grid .text').value) {
+    if (!gMeme.lines[gMeme.lines.length - 1].txt) {
+        gMeme.selectedLineIdx = gMeme.lines.length - 1;
         drawTextNew(getCurrLine().txt);   //    to keep the border of the current line
+        document.querySelector('.editor-grid .text').value = '';
         document.querySelector('.editor-grid .text').focus();
         return;
     }
@@ -236,4 +280,17 @@ function onLineUp() {
 function onSetFilter(txt) {
     setFilter(txt);
     init();
+}
+
+
+function onMoreClick(el) {
+    if (document.querySelector('.scnd-header .hashtags').style.height === '0px') {
+        document.querySelector('.scnd-header .hashtags').style.height = '100%'
+        el.innerText = 'X'
+    }
+    else {
+        document.querySelector('.scnd-header .hashtags').style.height = '0px'
+        el.innerText = 'more..'
+        document.querySelector('.scnd-header .hashtags').style.zIndex = '-1'
+    }
 }
