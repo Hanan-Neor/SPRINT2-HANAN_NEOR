@@ -67,16 +67,11 @@ img {
     padding: 10px 25px;
 }
 
-.scnd-header .hashtags {
-    /* padding-right: 0.15rem; */
-    /* width: 300px; */
-    /* z-index: -1; */
-    /* line-height: 1.5rem; */
-    height: 0px;
-}
-
 .show{
 
+}
+.scnd-header .hasgtags{
+    line-height: 1rem;
 }
 
 .scnd-header span {
