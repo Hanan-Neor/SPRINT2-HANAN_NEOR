@@ -45,16 +45,11 @@ var gMeme = {
             align: 'center',
             fontColor: 'white',
             strokeColor: 'black',
-            // x: gCanvas.width / 2,
-            // y: 10,
             x: gCanvas.width / 2,
             y: 30,
             borderX: 10,
             borderY: 10,
-            middleLinePos: 20,
             isDrag: false,
-            // pos,
-            // size:300,
         }
     ]
 }
@@ -97,47 +92,15 @@ function saveMeme() {
     saveToStorage('gMemesDB', gSavedMemes);
 }
 
-// function findElById(elUrl) {
-//     for (let meme in getSavedMemes()) {
-//         console.log('meme:',meme);
-//         if (meme.url === elUrl)
-//         console.log('the chosen one:',meme);
-//             return meme;
-//     }
-
-// }
 function findElById(elUrl) {
     var saved = getSavedMemes()
-    console.log(saved);
-    // return saved.find(meme => meme.url === elUrl);
-    // return saved.find(meme => meme.selectedLineIdx === 1).foo;
-    // for (let meme in saved) {
-    //     console.log('meme:',meme);
-    //     if (meme.url === elUrl)
-    //     console.log('the chosen one:',meme);
-    //         return meme;
-    // }
-    console.log('elUrl', elUrl);
     var x = '';
     saved.forEach(meme => {
         console.log('meme.url:', meme.url);
         if (meme.canvas === elUrl) x = meme;
     })
-    console.log(x);
     return x;
-
 }
-// function findImgById(imgId){
-//     console.log(imgId);
-//     // var imgId = document.querySelector('.img-container .img').id;
-//     var currImg = gImgs.find(img => {
-//         return img.id === imgId;
-//     })
-//     // console.log(currImg);
-
-//     // return currImg.url;
-//     return 'img/aspect-ratios/15.jpg';
-// }
 
 function getKeywords() {
     return gKeywords;
@@ -167,7 +130,6 @@ function cleanLine() {
     } else {
         backToDefault()
     }
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     drawTextNew(currLine().txt);
 }
 
@@ -321,21 +283,11 @@ function drawBorder() {
     var y = currLine().borderY;
     gCtx.beginPath();
     gCtx.lineWidth = 2;
-    gCtx.rect(x, y, gCanvas.width - 7, currLine().size)
+    // gCtx.rect(x, y, gCanvas.width - 7, currLine().size)
+    gCtx.rect(x, y, gCanvas.width - 7, currLine().size+3)
 
-    gCtx.strokeStyle = 'white';
+    gCtx.strokeStyle = 'red';
     gCtx.stroke();
-
-
-    // var yy = currLine().middleLinePos
-    // gCtx.beginPath();
-    // gCtx.lineWidth = 2;
-    // gRaw =  gCtx.rect(x, yy, gCanvas.width - 7, 30)
-    // gCtx.strokeStyle = 'red';
-    // gCtx.stroke();
-
-
-
 }
 
 function incTextSize() {

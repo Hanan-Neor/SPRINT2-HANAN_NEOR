@@ -19,6 +19,11 @@ function quaryselectors() {
     addMouseListeners()
     addTouchListeners()
 
+    document.querySelector('.editor-grid .text').addEventListener("keydown", function (e) {
+        if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+            onAddLine();
+        }
+    });
     document.querySelector('.editor-grid .font-input').addEventListener('mouseover', function () {
         document.querySelector('.editor-icons.color').style.background = "rgb(255, 127, 0)";
     })
@@ -57,7 +62,8 @@ function onToGallery() {
     onSetFilter('');
     document.querySelector('.main-content').style.display = "grid";
     document.querySelector('.meme-editor').style.display = "none";
-    document.querySelector('.scnd-header').style.display = "flex";
+    document.querySelector('.scnd-header-box').style.display = "block";
+    // document.querySelector('.scnd-header').hidden= false;
 
     document.querySelector('.meme-editor').classList.remove('.flex');
 }
@@ -70,7 +76,9 @@ function onToMemes() {
     } else renderSavedImgs(imgs);
     document.querySelector('.main-content').style.display = "grid";
     document.querySelector('.meme-editor').style.display = "none";
-    document.querySelector('.scnd-header').style.display = "none";
+    document.querySelector('.scnd-header-box').style.display = "none";
+    // document.querySelector('.scnd-header').style.hidden = true;
+
     document.querySelector('.meme-editor').classList.remove('.flex');
 }
 
@@ -81,11 +89,7 @@ function renderSavedImgs(savedMemesObjects) {
 
 `
         //         return `
-        // <img id=${savedMemesObject.selectedImgId} meme="${savedMemesObject}" src=${savedMemesObject.canvas} onclick="onSavedImageClick(this)"/>
-
-        // `
-        //         return `
-        // <img id=${savedMemesObject.selectedImgId} src=${findImgById(savedMemesObject.selectedImgId).url} onclick="onSavedImgClick(this)"/>
+        // <img id=${savedMemesObject.selectedImgId} src=${savedMemesObject.canvas} onclick="onImgClick(this)"/>
 
         // `
     })
@@ -93,58 +97,11 @@ function renderSavedImgs(savedMemesObjects) {
 }
 
 function onSavedImageClick(el) {
-    // drawImage(el);
     gMeme = findElById(el.src);
-    // console.log(gMeme);
-    // drawImage(el);
-    var x = gMeme.url.substr(21);
-    oldPic = `<img src="${x}"/>`
-    console.log(oldPic);
-
-    gImg = oldPic;
-    // gImg = x;
-    // document.querySelector('.main-content img').addEventListener('onload', function () {//not working
-    // drawImage(oldPic);
-    // setTimeout(()=>{alert('hello')
-    console.log(x);
-    var img = new Image();
-    img.src = gMeme.url;
-    img.onload = () => {
-
-        var canHeight = getCanvasHeight(el.width, el.height);
-        gCanvas.setAttribute("height", canHeight);
-        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-        // drawTextNew(getCurrLine().txt);
-
-
-        currLine().txt = getCurrLine().txt;
-        // gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-        // drawImage(gImg);
-        if (gIsBorder) {
-            drawBorder();
-        }
-        gMeme.lines.forEach(line => {
-            var x = line.x;
-            var y = line.y;
-            gCtx.textBaseline = 'middle';
-            gCtx.font = `${line.size}px ${gFont},Impact,Segoe UI Semibold`;
-            gCtx.lineWidth = 2;
-            gCtx.strokeStyle = line.strokeColor;
-            gCtx.fillStyle = line.fontColor;
-            gCtx.textAlign = line.align;
-            renderCanvas(line.txt, x, y);
-        })
-
-    }
-
-
-
-    // })
+    drawTextNew(currLine().txt)
     document.querySelector('.main-content').style.display = "none";
     document.querySelector('.meme-editor').style.display = "flex";
     renderFontsOptions();
-
-    // },2000)
 }
 
 
@@ -154,7 +111,7 @@ function renderKeywords() {
     var strHTML = ``
     var x = 0;
     for (let word in keywords) {
-        if (x === 7) strHTML += `<span class="more" style="display:none; margin:0">`
+        if (x === 4) strHTML += `<span class="more" style="display:none; margin:0">`
         strHTML += `<span onclick="onSetFilter('${word}')">${word}</span>`
         // strHTML+=`<a>${word}</a> `
         // console.log(`${word} : ${keywords[word]}`)
@@ -175,7 +132,7 @@ function renderKeywords() {
 }
 
 function onImgClick(el) {
-    gMeme.url = el.src;
+    // gMeme.url = el.src;
     gMeme.selectedImgId = el.id;
     // drawImage(el);
     drawTextNew('');
@@ -197,25 +154,16 @@ function renderFontsOptions() {
 
 }
 
-// function drawImage(el) {
-//     gImg = el;
-//     // gMeme.id = el.id;
-//     var img = new Image();
-//     // img.src = gMeme.url;
-//     img.src = gImg.src;
-//     img.onload = () => {
-
-//         var canHeight = getCanvasHeight(el.width, el.height);
-//         gCanvas.setAttribute("height", canHeight);
-//         gCtx.drawImage(el, 0, 0, gCanvas.width, gCanvas.height);
-//     }
-// }
-
 function onSaveClick() {
     gIsBorder = false;
     drawTextNew(currLine().txt);
-    saveMeme();
-    onToMemes();
+    setTimeout(function () { ///To handle border display
+        saveMeme()
+        onToMemes()
+    }, 10);
+
+
+
 }
 
 function drawImageById(obMeme) {
@@ -348,13 +296,15 @@ function onSetFilter(txt) {
 //     }
 // }
 function onMoreClick(el) {
+    // document.querySelector('.scnd-header .hashtags .more').hidden = false;
+if(el.innerText === 'more..'){
     document.querySelector('.scnd-header .hashtags .more').style.display = 'inline-block';
     //     document.querySelector('.scnd-header .hashtags').style.height = '100%'
     el.innerText = 'X'
-    // }
-    // else {
-    //     document.querySelector('.scnd-header .hashtags').style.height = '0px'
+
+    }
+    else {
+        document.querySelector('.scnd-header .hashtags .more').style.display= 'none'
     el.innerText = 'more..'
-    //     document.querySelector('.scnd-header .hashtags').style.zIndex = '-1'
-    // }
+    }
 }

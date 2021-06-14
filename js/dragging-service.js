@@ -11,8 +11,6 @@ function createCircle(pos) {
     }
 }
 
-
-
 function addMouseListeners() {
     gCanvas.addEventListener('mousemove', onMove)
     gCanvas.addEventListener('mousedown', onDown)
@@ -75,8 +73,6 @@ function onUp() {
     // document.body.style.cursor = 'grab'
 }
 
-
-
 function getEvPos(ev) {
     var pos = {
         x: ev.offsetX,
@@ -93,24 +89,6 @@ function getEvPos(ev) {
     return pos
 }
 
-
-
-// function isLineClicked(clickedPos) {
-
-
-//     // for(var i = 0 ; i<gMeme.lines.length; i++){
-//     // const pos = gMeme.lines[0].borderY;
-
-//     // const pos = currLine().borderY;
-//     const pos = currLine().middleLinePos;
-
-//     const distance = Math.sqrt((pos - clickedPos.y) ** 2)
-//     // if( distance <= 20){
-//     //  alert('hi')   
-//     // gMeme.selectedLineIdx = i
-//     // return true;
-//     return distance <= 30;
-// }
 function isLineClicked(clickedPos) {
     for (var i = 0; i < gMeme.lines.length; i++) {
         // if(clickedPos.y >= getCurrLine().borderY && clickedPos.y <= getCurrLine().borderY+getCurrLine().size)
