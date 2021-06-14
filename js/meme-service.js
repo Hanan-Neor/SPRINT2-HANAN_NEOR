@@ -279,12 +279,12 @@ function getYshift() {
 }
 
 function drawBorder() {
-    var x = 3;
+    var x = 2;
     var y = currLine().borderY;
     gCtx.beginPath();
     gCtx.lineWidth = 2;
     // gCtx.rect(x, y, gCanvas.width - 7, currLine().size)
-    gCtx.rect(x, y, gCanvas.width - 7, currLine().size+3)
+    gCtx.rect(x, y, gCanvas.width - 4, currLine().size+3)
 
     gCtx.strokeStyle = 'red';
     gCtx.stroke();

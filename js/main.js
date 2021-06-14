@@ -5,6 +5,7 @@ var gImg;
 var gIsBorder = true;
 
 function init() {
+    document.querySelector('body').hidden = false;
     // console.dir(gCanvas)
     var imgs = getImgs();
     renderImgs(imgs);
@@ -66,6 +67,7 @@ function onToGallery() {
     // document.querySelector('.scnd-header').hidden= false;
 
     document.querySelector('.meme-editor').classList.remove('.flex');
+
 }
 
 function onToMemes() {
@@ -247,8 +249,8 @@ function onFontColor(color) {
 }
 
 function renderCanvas(text, x, y) {
-    gCtx.fillText(text, x, y, gCanvas.width - 10);
-    gCtx.strokeText(text, x, y, gCanvas.width - 10);
+    gCtx.fillText(text, x, y, gCanvas.width - 8);
+    gCtx.strokeText(text, x, y, gCanvas.width - 8);
 }
 
 function onChooseRow() {
