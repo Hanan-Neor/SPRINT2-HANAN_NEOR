@@ -111,8 +111,9 @@ function setLineDrag(isDrag) {
     getCurrLine().isDrag = isDrag
 }
 function moveLine(dx, dy) {
-    getCurrLine().align = 'center'//// exits from the align left or right.
-    document.querySelector('.editor-grid .text').style.textAlign = "center";
+
+    // getCurrLine().align = 'center'//// exits from the align left or right.
+    // document.querySelector('.editor-grid .text').style.textAlign = "center";
 
     // gCircle.pos.x += dx
     getCurrLine().y += dy

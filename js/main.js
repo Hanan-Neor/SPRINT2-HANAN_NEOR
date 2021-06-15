@@ -5,6 +5,7 @@ var gImg;
 var gIsBorder = true;
 
 function init() {
+    gSavedMemes = getSavedMemes();
     document.querySelector('body').hidden = false;
     // console.dir(gCanvas)
     var imgs = getImgs();
