@@ -25,7 +25,14 @@ var gImgs = [
     { id: 15, url: 'img/aspect-ratios/15.jpg', keywords: ['baby'] },
     { id: 16, url: 'img/aspect-ratios/16.jpg', keywords: ['dogs', 'animals'] },
     { id: 17, url: 'img/aspect-ratios/17.jpg', keywords: ['barak', 'obama', 'happy', 'lough'] },
-    { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['sport', 'basketball', 'bro'] },
+    { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['', '', ''] },
+    { id: 19, url: 'img/aspect-ratios/19.jpg', keywords: ['', '', ''] },
+    { id: 20, url: 'img/aspect-ratios/20.jpg', keywords: ['', '', ''] },
+    { id: 21, url: 'img/aspect-ratios/21.jpg', keywords: ['', '', ''] },
+    { id: 22, url: 'img/aspect-ratios/22.jpg', keywords: ['', '', ''] },
+    { id: 23, url: 'img/aspect-ratios/23.jpg', keywords: ['', '', ''] },
+    { id: 24, url: 'img/aspect-ratios/24.jpg', keywords: ['', '', ''] },
+    { id: 25, url: 'img/aspect-ratios/25.jpg', keywords: ['', '', ''] },
 ];
 
 // var gSavedMemes = [
@@ -48,7 +55,7 @@ var gMeme = {
             x: gCanvas.width / 2,
             y: 30,
             isDrag: false,
-            txtWidth : 0,
+            txtWidth: 0,
         }
     ]
 }
@@ -74,9 +81,9 @@ function getImgs() {
 
 function getSavedMemes() {
     // var savedMemes = loadFromStorage('gMemesDB')
-    let savedMemes= loadFromStorage('gMemesDB');
-    if(savedMemes) return savedMemes;
-    else return[];
+    let savedMemes = loadFromStorage('gMemesDB');
+    if (savedMemes) return savedMemes;
+    else return [];
 }
 
 function saveMeme() {
@@ -263,10 +270,12 @@ function getYshift() {
 function drawBorder() {
     gCtx.beginPath();
     var y = currLine().y - currLine().size / 2;
-    gCtx.lineWidth = 2;
-    gCtx.font = `${currLine().size}px ${gFont},Impact,Segoe UI Semibold`; 
+    gCtx.lineWidth = 3;
+    gCtx.font = `${currLine().size}px ${gFont},Impact,Segoe UI Semibold`;
     let txtWidth = gCtx.measureText(currLine().txt).width;
     let x;
+    if (txtWidth < gCanvas.width - 8) {
+    
     switch (currLine().align) {
         case 'center': x = currLine().x - txtWidth / 2;
         break;
@@ -276,12 +285,31 @@ function drawBorder() {
         break;
     }
     // gCtx.font = `${currLine().size}px ${gFont}`
-
+    
     // gCtx.font = `5px ${gFont}`
-    gCtx.rect(x, y, txtWidth, currLine().size)
-    gCtx.strokeStyle = 'red';
+        gCtx.rect(x - 5, y, txtWidth + 10, currLine().size)
+    } else {
+
+        switch (currLine().align) {
+            case 'center': x = currLine().x - txtWidth / 2 +(txtWidth -gCanvas.width)/2;
+            break;
+            case 'right': x = currLine().x +5 - txtWidth + txtWidth - gCanvas.width;
+            break;
+            case 'left': x = currLine().x -5;
+            break;
+        }
+    
+        //center: // gCtx.rect(x +(txtWidth -gCanvas.width)/2 , y, gCanvas.width - 8, currLine().size)
+        // LEFT:
+        //  gCtx.rect(x  , y, gCanvas.width - 8, currLine().size)
+        //RIGHT:
+        gCtx.rect(x , y, gCanvas.width, currLine().size)
+        
+    }
+        gCtx.strokeStyle = 'red';
         gCtx.stroke();
-        // txtWidth = 0;
+    // gCtx.fillStyle = 'rgb(0, 0, 0,10%)';
+    //     gCtx.fill();
 }
 
 function incTextSize() {

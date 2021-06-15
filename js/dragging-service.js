@@ -99,7 +99,7 @@ function isLineClicked(clickedPos) {
 
         // if(clickedPos.y >= getCurrLine().borderY && clickedPos.y <= getCurrLine().borderY+getCurrLine().size)
         if (clickedPos.y > gMeme.lines[i].y - gMeme.lines[i].size / 2 && clickedPos.y < gMeme.lines[i].y + gMeme.lines[i].size / 2
-            && clickedPos.x > x && clickedPos.x < x + txtWidth) {
+            && clickedPos.x > x -5 && clickedPos.x < x + txtWidth +10) {
             gMeme.selectedLineIdx = i;
             // onChooseRow();
             return true;

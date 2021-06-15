@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6 {
 .img-container {
     background-color: #e3e3e3;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(176.5px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
     /* grid-template-columns: repeat(auto-fill, minmax(176.5px, 176.5px)); */
     grid-auto-rows: auto;
 
