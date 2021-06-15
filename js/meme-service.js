@@ -264,7 +264,7 @@ function drawBorder() {
     gCtx.beginPath();
     var y = currLine().y - currLine().size / 2;
     gCtx.lineWidth = 2;
-    gCtx.font = `${currLine().size + (currLine().size*42/100)}px ${gFont}`    // ????????????? it catches the wrong font size, so added this exp
+    gCtx.font = `${currLine().size}px ${gFont},Impact,Segoe UI Semibold`; 
     let txtWidth = gCtx.measureText(currLine().txt).width;
     let x;
     switch (currLine().align) {
