@@ -299,14 +299,14 @@ function onSetFilter(txt) {
 // }
 function onMoreClick(el) {
     // document.querySelector('.scnd-header .hashtags .more').hidden = false;
-if(el.innerText === 'more..'){
-    document.querySelector('.scnd-header .hashtags .more').style.display = 'inline-block';
-    //     document.querySelector('.scnd-header .hashtags').style.height = '100%'
-    el.innerText = 'X'
+    if (el.innerText === 'more..') {
+        document.querySelector('.scnd-header .hashtags .more').style.display = 'inline-block';
+        //     document.querySelector('.scnd-header .hashtags').style.height = '100%'
+        el.innerText = 'X'
 
     }
     else {
-        document.querySelector('.scnd-header .hashtags .more').style.display= 'none'
-    el.innerText = 'more..'
+        document.querySelector('.scnd-header .hashtags .more').style.display = 'none'
+        el.innerText = 'more..'
     }
 }

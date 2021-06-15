@@ -47,8 +47,6 @@ var gMeme = {
             strokeColor: 'black',
             x: gCanvas.width / 2,
             y: 30,
-            borderX: 10,
-            borderY: 10,
             isDrag: false,
         }
     ]
@@ -79,14 +77,7 @@ function getSavedMemes() {
 }
 
 function saveMeme() {
-    // const data = gCanvas.toDataURL();
-    // const dataToSave = {url:data};
-    // gSavedMemes.unshift(dataToSave)
-    // saveToStorage('gMemesDB',gSavedMemes);
-
     gMeme.canvas = gCanvas.toDataURL();
-    // console.log(gMeme.can);
-
     const data = JSON.parse(JSON.stringify(gMeme));
     gSavedMemes.unshift(data);
     saveToStorage('gMemesDB', gSavedMemes);
@@ -107,7 +98,6 @@ function getKeywords() {
 }
 
 function getCanvasHeight(imgWidth, imgHeight) {
-    // var canWidth = document.querySelector('canvas');
     var canWidth = gCanvas.width;
     var canHeight = (imgHeight * canWidth) / imgWidth;
     return canHeight;
@@ -145,7 +135,6 @@ function backToDefault() {
         obj.strokeColor = 'black';
         obj.x = gCanvas.width / 2;
         obj.y = 30;
-        obj.borderY = 10;
     })
 }
 
@@ -160,17 +149,15 @@ function addLine() {
     currLine().strokeColor = 'black';
     currLine().x = getX();
     currLine().y = getY();
-    currLine().borderY = getY() - 20;
-    currLine().middleLinePos = getY() - 10;
+    // currLine().borderY = getY() - 20;
+    // currLine().middleLinePos = getY() - 10;
     drawTextNew(currLine().txt);   //    to erease old border
-
 }
 
 
 function downloadMeme(elLink) {
     gIsBorder = false;
     drawTextNew(currLine().txt);
-
     const data = gCanvas.toDataURL();
     elLink.href = data;
 }
@@ -185,29 +172,26 @@ function drawSavedMeme() {
 }
 
 function getImgById(id) {
-    var imgObj ;
-   gImgs.forEach(img => {
-       if (img.id == id) imgObj=img;
-   })
-   return imgObj
+    var imgObj;
+    gImgs.forEach(img => {
+        if (img.id == id) imgObj = img;
+    })
+    return imgObj
 
 }
 
 
 function drawTextNew(text) {
     currLine().txt = text;
-    
     var x = getImgById(gMeme.selectedImgId);
     var img = new Image();
     img.src = x.url;
     img.onload = () => {
         gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+
         var canHeight = getCanvasHeight(img.width, img.height);
         gCanvas.setAttribute("height", canHeight);
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-        if (gIsBorder) {
-            drawBorder();
-        }
         gMeme.lines.forEach(line => {
             var x = line.x;
             var y = line.y;
@@ -219,6 +203,9 @@ function drawTextNew(text) {
             gCtx.textAlign = line.align;
             renderCanvas(line.txt, x, y);
         })
+        if (gIsBorder) {
+            drawBorder();
+        }
     }
 }
 
@@ -232,15 +219,6 @@ function setTextPos(line) {
             break;
         case 'right':
             gCtx.textAlign = 'right';
-            break;
-    }
-
-    switch (gMeme.selectedLineIdx) {
-        case 0: gCtx.textBaseline = 'top'
-            break;
-        case 1: gCtx.textBaseline = 'bottom'
-            break;
-        default: gCtx.textBaseline = 'middle'
             break;
     }
 }
@@ -279,33 +257,32 @@ function getYshift() {
 }
 
 function drawBorder() {
-    var x = 2;
-    var y = currLine().borderY;
+    const txtWidth = gCtx.measureText(currLine().txt).width;
+    let x;
+    switch (currLine().align) {
+        case 'center': x = currLine().x - txtWidth / 2;
+            break;
+        case 'right': x = currLine().x - txtWidth;
+            break;
+        case 'left': x = currLine().x;
+            break;
+    }
+    var y = currLine().y - currLine().size / 2;
     gCtx.beginPath();
     gCtx.lineWidth = 2;
-    // gCtx.rect(x, y, gCanvas.width - 7, currLine().size)
-    gCtx.rect(x, y, gCanvas.width - 4, currLine().size+3)
-
+    gCtx.font = `${currLine().size}px ${gFont}`
+    gCtx.rect(x, y, txtWidth, currLine().size)
     gCtx.strokeStyle = 'red';
     gCtx.stroke();
 }
 
 function incTextSize() {
     currLine().size += gTextSizeChange;
-    if (gMeme.selectedLineIdx === 1) {
-        currLine().borderY -= gTextSizeChange;
-    } else if (gMeme.selectedLineIdx >= 2) currLine().borderY -= gTextSizeChange / 2;
-    currLine().y += getYshift();
     drawTextNew(currLine().txt);
 }
 
 function decTextSize() {
     currLine().size -= gTextSizeChange;
-    if (gMeme.selectedLineIdx === 1) {
-        currLine().borderY += gTextSizeChange;
-        // currLine().middleLinePos+=gTextSizeChange/2;
-    } else if (gMeme.selectedLineIdx >= 2) currLine().borderY += gTextSizeChange / 2;
-    currLine().y -= getYshift();
     drawTextNew(currLine().txt);
 }
 
@@ -343,7 +320,6 @@ function chooseRow() {
     } else {
         gMeme.selectedLineIdx--;
     }
-    // currLine().middleLinePos = 20;
     drawTextNew(currLine().txt); /// to draw the border 
 }
 
@@ -354,13 +330,11 @@ function changeFont(font) {
 
 function lineDown() {
     currLine().y += gTextSizeChange;
-    currLine().borderY += gTextSizeChange;
     drawTextNew(currLine().txt);
 }
 
 function lineUp() {
     currLine().y -= gTextSizeChange;
-    currLine().borderY -= gTextSizeChange;
     drawTextNew(currLine().txt);
 }
 

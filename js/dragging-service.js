@@ -23,29 +23,26 @@ function addTouchListeners() {
     gCanvas.addEventListener('touchend', onUp)
 }
 
-function getCircle() {
-    return gCircle
-}
-
 
 function onDown(ev) {
     // console.log(ev);
-    
+
     const pos = getEvPos(ev)
     // console.log(pos);
     if (!isLineClicked(pos)) {
-    gIsBorder = false;
+        gIsBorder = false;
+
+        drawTextNew(currLine().txt);
+
+        return
+    };
+    gIsBorder = true;
+
+    document.querySelector('.editor-grid .text').value = getCurrLine().txt;////not its place!!!!!!!!!!!
+    document.querySelector('.editor-grid .text').style.textAlign = getCurrLine().align;////not its place!!!!!!!!!!!
+    document.querySelector('.editor-grid .text').focus();
 
     drawTextNew(currLine().txt);
-        
-        return};
-        gIsBorder = true;
-    
-        document.querySelector('.editor-grid .text').value = getCurrLine().txt;////not its place!!!!!!!!!!!
-        document.querySelector('.editor-grid .text').style.textAlign = getCurrLine().align;////not its place!!!!!!!!!!!
-        document.querySelector('.editor-grid .text').focus();
-        
-        drawTextNew(currLine().txt);
     setLineDrag(true)
     gStartPos = pos
     // document.body.style.cursor = 'grabbing'
@@ -62,14 +59,12 @@ function onMove(ev) {
         // renderCanvas()
         gIsBorder = true;
         drawTextNew(currLine().txt);
-    // document.querySelector('.editor-grid .text').focus();
-
-
     }
 }
 
 function onUp() {
     setLineDrag(false)
+
     // document.body.style.cursor = 'grab'
 }
 
@@ -91,8 +86,20 @@ function getEvPos(ev) {
 
 function isLineClicked(clickedPos) {
     for (var i = 0; i < gMeme.lines.length; i++) {
+        const txtWidth = gCtx.measureText(gMeme.lines[i].txt).width;
+        let x;
+        switch (gMeme.lines[i].align) {
+            case 'center': x = gMeme.lines[i].x - txtWidth / 2;
+                break;
+            case 'right': x = gMeme.lines[i].x - txtWidth;
+                break;
+            case 'left': x = gMeme.lines[i].x;
+                break;
+        }
+
         // if(clickedPos.y >= getCurrLine().borderY && clickedPos.y <= getCurrLine().borderY+getCurrLine().size)
-        if (clickedPos.y >= gMeme.lines[i].borderY && clickedPos.y <= gMeme.lines[i].borderY + gMeme.lines[i].size) {
+        if (clickedPos.y > gMeme.lines[i].y - gMeme.lines[i].size / 2 && clickedPos.y < gMeme.lines[i].y + gMeme.lines[i].size / 2
+            && clickedPos.x > x && clickedPos.x < x + txtWidth) {
             gMeme.selectedLineIdx = i;
             // onChooseRow();
             return true;
@@ -104,12 +111,14 @@ function setLineDrag(isDrag) {
     getCurrLine().isDrag = isDrag
 }
 function moveLine(dx, dy) {
+    getCurrLine().align = 'center'//// exits from the align left or right.
+    document.querySelector('.editor-grid .text').style.textAlign = "center";
 
     // gCircle.pos.x += dx
-    currLine().middleLinePos += dy;
     getCurrLine().y += dy
     getCurrLine().x += dx
-    getCurrLine().borderY += dy
+    // getCurrLine().borderX +=dx
+    // getCurrLine().borderY += dy
 }
 
 
