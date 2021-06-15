@@ -28,8 +28,8 @@ var gImgs = [
     { id: 18, url: 'img/aspect-ratios/18.jpg', keywords: ['sport', 'basketball', 'bro'] },
 ];
 
-var gSavedMemes = [
-];
+// var gSavedMemes = [
+// ];
 
 const fonts = ['Impact', 'Arial', 'Calibri', 'Comic Sans MS', 'Segoe UI Semibold', 'Tahoma', 'Times New Roman', 'David Bold', 'Miriam']
 
@@ -48,6 +48,7 @@ var gMeme = {
             x: gCanvas.width / 2,
             y: 30,
             isDrag: false,
+            txtWidth : 0,
         }
     ]
 }
@@ -72,8 +73,10 @@ function getImgs() {
 }
 
 function getSavedMemes() {
-    var savedMemes = loadFromStorage('gMemesDB')
-    return savedMemes;
+    // var savedMemes = loadFromStorage('gMemesDB')
+    let savedMemes= loadFromStorage('gMemesDB');
+    if(savedMemes) return savedMemes;
+    else return[];
 }
 
 function saveMeme() {
@@ -183,6 +186,7 @@ function getImgById(id) {
 
 function drawTextNew(text) {
     currLine().txt = text;
+    // gCtx.font = `${currLine().size}px ${gFont}`
     var x = getImgById(gMeme.selectedImgId);
     var img = new Image();
     img.src = x.url;
@@ -257,23 +261,27 @@ function getYshift() {
 }
 
 function drawBorder() {
-    const txtWidth = gCtx.measureText(currLine().txt).width;
+    gCtx.beginPath();
+    var y = currLine().y - currLine().size / 2;
+    gCtx.lineWidth = 2;
+    gCtx.font = `${currLine().size + (currLine().size*42/100)}px ${gFont}`    // ????????????? it catches the wrong font size, so added this exp
+    let txtWidth = gCtx.measureText(currLine().txt).width;
     let x;
     switch (currLine().align) {
         case 'center': x = currLine().x - txtWidth / 2;
-            break;
+        break;
         case 'right': x = currLine().x - txtWidth;
-            break;
+        break;
         case 'left': x = currLine().x;
-            break;
+        break;
     }
-    var y = currLine().y - currLine().size / 2;
-    gCtx.beginPath();
-    gCtx.lineWidth = 2;
-    gCtx.font = `${currLine().size}px ${gFont}`
+    // gCtx.font = `${currLine().size}px ${gFont}`
+
+    // gCtx.font = `5px ${gFont}`
     gCtx.rect(x, y, txtWidth, currLine().size)
     gCtx.strokeStyle = 'red';
-    gCtx.stroke();
+        gCtx.stroke();
+        // txtWidth = 0;
 }
 
 function incTextSize() {

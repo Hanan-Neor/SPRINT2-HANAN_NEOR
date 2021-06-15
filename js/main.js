@@ -6,6 +6,7 @@ var gIsBorder = true;
 
 function init() {
     gSavedMemes = getSavedMemes();
+    // else gSavedMemes = [];
     document.querySelector('body').hidden = false;
     // console.dir(gCanvas)
     var imgs = getImgs();
@@ -73,7 +74,7 @@ function onToGallery() {
 
 function onToMemes() {
     var imgs = getSavedMemes();
-    if (!getSavedMemes()) {
+    if (getSavedMemes().length ===0) {
         document.querySelector('.img-container').innerHTML = 'nothing to show yet'
         // } else renderImgs(imgs);
     } else renderSavedImgs(imgs);
