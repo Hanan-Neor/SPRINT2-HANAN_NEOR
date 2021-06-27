@@ -284,12 +284,8 @@ function drawBorder() {
         case 'left': x = currLine().x;
         break;
     }
-    // gCtx.font = `${currLine().size}px ${gFont}`
-    
-    // gCtx.font = `5px ${gFont}`
         gCtx.rect(x - 5, y, txtWidth + 10, currLine().size)
     } else {
-
         switch (currLine().align) {
             case 'center': x = currLine().x - txtWidth / 2 +(txtWidth -gCanvas.width)/2;
             break;
@@ -298,13 +294,7 @@ function drawBorder() {
             case 'left': x = currLine().x -5;
             break;
         }
-    
-        //center: // gCtx.rect(x +(txtWidth -gCanvas.width)/2 , y, gCanvas.width - 8, currLine().size)
-        // LEFT:
-        //  gCtx.rect(x  , y, gCanvas.width - 8, currLine().size)
-        //RIGHT:
         gCtx.rect(x , y, gCanvas.width, currLine().size)
-        
     }
         gCtx.strokeStyle = 'red';
         gCtx.stroke();
